@@ -33,3 +33,8 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# project specific
+next-frontend-identity.json
+ui-debug.log
+.vscode

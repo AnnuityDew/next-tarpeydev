@@ -9,19 +9,24 @@
     "start": "next start src/",
     "serve": "npm run build && firebase emulators:start --only functions,hosting",
     "shell": "npm run build && firebase functions:shell",
-    "deploy": "firebase deploy --only functions,hosting",
+    "deploy": "firebase deploy --only hosting",
+    "deployfunc": "firebase deploy --only functions,hosting",
     "logs": "firebase functions:log"
   },
   "dependencies": {
     "firebase-admin": "^9.4.2",
     "firebase-functions": "^3.13.1",
     "next": "latest",
+    "prettier": "2.2.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   },
   "devDependencies": {
+    "@types/node": "^14.14.31",
+    "@types/react": "^17.0.2",
     "firebase-functions-test": "^0.2.3",
-    "firebase-tools": "^9.3.0"
+    "firebase-tools": "^9.3.0",
+    "typescript": "^4.2.2"
   },
   "license": "MIT"
 }
