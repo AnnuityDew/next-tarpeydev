@@ -1,8 +1,36 @@
 import App from "../components/App"
 import { Component } from "react"
+import { StyledButton } from "../components/Buttons"
+
+// This gets called on every request
+export async function getServerSideProps() {
+  // Fetch data from external API
+  let body = {
+    grant_type: "client_credentials",
+    scope: "all_data",
+  }
+  let api = ""
+  if (process.env.API_ENV === "testing") {
+    api = "http://127.0.0.1:8000"
+  } else {
+    api = "https://api.tarpey.dev"
+  }
+  const res = await fetch(api + "/security/token", {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      authorization: "Basic " + process.env.OKTA_ENCODED_ID_SECRET,
+    },
+    body: JSON.stringify(body),
+  })
+  const jwtData = await res.json()
+
+  // Pass data to the page via props
+  return { props: { token: jwtData["access_token"], apiUrl: api } }
+}
 
 class BracketGenerator extends Component<
-  {},
+  { token: string; apiUrl: string },
   { viewBracket: boolean; bracketFlavor: string; bracketData: string }
 > {
   constructor(props) {
@@ -14,19 +42,14 @@ class BracketGenerator extends Component<
       bracketData: "",
     }
   }
+
   async bracketRequested(selectedFlavor) {
-    var api = ""
-    if (process.env.NEXT_PUBLIC_API_ENV) {
-      api = process.env.NEXT_PUBLIC_API_ENV
-    } else {
-      api = "http://127.0.0.1:8000"
-    };
-    let data = await Promise.all([
-      fetch(api + "/autobracket/bracket/2020/mild", {
+    await Promise.all([
+      fetch(this.props.apiUrl + "/autobracket/bracket/2020/mild", {
         method: "GET",
         headers: {
           accept: "application/json",
-          "next-tarpeydev-api-key": process.env.NEXT_PUBLIC_API_KEY,
+          Authorization: "Bearer " + this.props.token,
         },
       })
         .then(response => {
@@ -54,21 +77,13 @@ class BracketGenerator extends Component<
     if (!this.state.viewBracket) {
       bracketForm = (
         <div>
-          <button onClick={this.bracketRequested.bind(this, "none")}>
-            Vanilla (middle 20% of simulations)
-          </button>
-          <button onClick={this.bracketRequested.bind(this, "mild")}>
-            Mild (middle 50% of simulations)
-          </button>
-          <button onClick={this.bracketRequested.bind(this, "medium")}>
-            Medium (middle 80% of simulations)
-          </button>
-          <button onClick={this.bracketRequested.bind(this, "max")}>
-            MAX SPICE (hope you like outliers!)
-          </button>
+          <StyledButton label="Vanilla (middle 20% of simulations)" click={this.bracketRequested.bind(this, "none")} />
+          <StyledButton label="Mild (middle 50% of simulations)" click={this.bracketRequested.bind(this, "mild")} />
+          <StyledButton label="Medium (middle 80% of simulations)" click={this.bracketRequested.bind(this, "medium")} />
+          <StyledButton label="MAX SPICE (hope you like outliers!)" click={this.bracketRequested.bind(this, "max")} />
         </div>
       )
-      bracket = ""
+      bracket = <div></div>
     } else {
       bracketForm = (
         <div>
@@ -80,7 +95,7 @@ class BracketGenerator extends Component<
       bracket = (
         <div>
           {JSON.parse(this.state.bracketData).map(game => (
-            <p>
+            <p key={game.away_team + game.home_team}>
               {game.away_seed} {game.away_team} vs. {game.home_seed}{" "}
               {game.home_team}. {game.sim_winner} wins by{" "}
               {Math.abs(game.home_margin)}!
