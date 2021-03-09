@@ -1,4 +1,4 @@
-Live at https://tarpeydev.web.app for now
+Live at https://next-tarpeydev.vercel.app/ for now
 
 Many thanks to:
 https://github.com/vercel/next.js/tree/canary/examples/with-firebase-hosting
