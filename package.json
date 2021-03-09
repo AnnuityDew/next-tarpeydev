@@ -1,8 +1,7 @@
 {
-  "name": "with-firebase-hosting",
-  "version": "5.0.0",
-  "description": "Host Next.js SSR app on Firebase Cloud Functions with Firebase Hosting redirects.",
-  "main": "firebaseFunctions.js",
+  "name": "next-tarpeydev",
+  "version": "latest",
+  "description": "https://tarpey.dev",
   "scripts": {
     "dev": "next",
     "build": "next build",
