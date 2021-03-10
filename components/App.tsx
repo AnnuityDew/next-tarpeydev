@@ -3,7 +3,7 @@ import SEO from "./SEO"
 import Header from "./Header"
 
 type AppProps = {
-  children: React.ReactChild
+  children: React.ReactNode;
   titleTwo?: string
   description?: string
 }

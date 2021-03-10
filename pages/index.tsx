@@ -76,9 +76,6 @@ class BracketGenerator extends Component<
   }
 
   render() {
-    if (this.props.errorCode) {
-      return <Error statusCode={this.props.errorCode} />
-    }
     let bracketForm, bracket, bracketJSON
     if (!this.state.viewBracket) {
       bracketForm = (
