@@ -107,10 +107,9 @@ class BracketGenerator extends Component<
           </button>
         </div>
       )
-      bracketJSON = JSON.parse(this.state.bracketData)
       bracket = (
         <div>
-          {bracketJSON.map(game => (
+          {this.state.bracketData && (JSON.parse(this.state.bracketData)).map(game => (
             <Scorecard
               awaySeed={game.away_seed}
               awayTeam={game.away_team}
