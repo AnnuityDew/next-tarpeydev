@@ -4,8 +4,8 @@ import Header from "./Header"
 
 type AppProps = {
   children: React.ReactNode;
-  titleTwo?: string
-  description?: string
+  titleTwo?: string;
+  description?: string;
 }
 
 const defaultDesc =

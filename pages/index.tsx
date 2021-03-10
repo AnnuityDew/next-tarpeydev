@@ -1,4 +1,5 @@
 import App from "../components/App"
+import styled from "styled-components"
 import { Component } from "react"
 import { StyledButton } from "../components/Buttons"
 import Scorecard from "../components/Scorecard"
@@ -79,8 +80,7 @@ class BracketGenerator extends Component<
   }
 
   render() {
-    console.log(this.state.viewBracket);
-    let bracketForm, bracket;
+    let bracketForm, bracket
     if (!this.state.viewBracket) {
       bracketForm = (
         <div>
@@ -104,28 +104,36 @@ class BracketGenerator extends Component<
       )
       bracket = <div></div>
     } else {
-      console.log(this.state.bracketData);
       bracketForm = (
         <div>
           <button onClick={this.bracketReset.bind(this)}>
             Request a new bracket!
           </button>
         </div>
-      );
+      )
+
+      let BracketGrid = styled.div`
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(min(500px, 100%), 1fr));
+      `
       bracket = (
-        <div>
-          {this.state.bracketData && (JSON.parse(this.state.bracketData)).map(game => (
-            <Scorecard
-              awaySeed={game.away_seed}
-              awayTeam={game.away_team}
-              homeSeed={game.home_seed}
-              homeTeam={game.home_team}
-              winner={game.sim_winner}
-              margin={Math.abs(game.home_margin)}
-            />
-          ))}
-        </div>
-      );
+        <BracketGrid>
+          {this.state.bracketData &&
+            JSON.parse(this.state.bracketData).map((game, index) => (
+              <Scorecard
+                key={index + 1}
+                gameIndex={index + 1}
+                awaySeed={game.away_seed}
+                awayTeam={game.away_team}
+                homeSeed={game.home_seed}
+                homeTeam={game.home_team}
+                winner={game.sim_winner}
+                margin={Math.abs(game.home_margin)}
+                boxScoreId={game.sim_ObjectId}
+              />
+            ))}
+        </BracketGrid>
+      )
     }
 
     return (
@@ -146,7 +154,7 @@ class BracketGenerator extends Component<
 
         <span>How spicy would you like your bracket?</span>
         <div className="form-container">{bracketForm}</div>
-        <div className="bracket-container">{bracket}</div>
+        {bracket}
       </App>
     )
   }
