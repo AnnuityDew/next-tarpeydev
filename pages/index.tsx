@@ -57,12 +57,15 @@ class BracketGenerator extends Component<
         .then(response => {
           return response.json()
         })
-        .then(data => {
-          this.setState(state => ({
-            bracketData: JSON.stringify(data),
+        .then(jsonData => {
+          return JSON.stringify(jsonData)
+        })
+        .then(jsonString => {
+          this.setState({
+            bracketData: jsonString,
             viewBracket: true,
             bracketFlavor: selectedFlavor,
-          }))
+          })
         }),
     ])
   }
