@@ -79,7 +79,8 @@ class BracketGenerator extends Component<
   }
 
   render() {
-    let bracketForm, bracket, bracketJSON
+    console.log(this.state.viewBracket);
+    let bracketForm, bracket;
     if (!this.state.viewBracket) {
       bracketForm = (
         <div>
@@ -103,13 +104,14 @@ class BracketGenerator extends Component<
       )
       bracket = <div></div>
     } else {
+      console.log(this.state.bracketData);
       bracketForm = (
         <div>
           <button onClick={this.bracketReset.bind(this)}>
             Request a new bracket!
           </button>
         </div>
-      )
+      );
       bracket = (
         <div>
           {this.state.bracketData && (JSON.parse(this.state.bracketData)).map(game => (
@@ -123,7 +125,7 @@ class BracketGenerator extends Component<
             />
           ))}
         </div>
-      )
+      );
     }
 
     return (
