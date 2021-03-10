@@ -1,11 +1,12 @@
 import styled from "styled-components"
 
 type ButtonProps = {
-  label: string
-  click: React.MouseEventHandler<HTMLButtonElement>
+  label: string;
+  kind: string;
+  click: React.MouseEventHandler<HTMLButtonElement>;
   /* className essential for styled components to work!
     https://stackoverflow.com/questions/54113367/extending-styles-with-styled-components-not-working */
-  className: string
+  className: string;
 }
 
 const Button = (props: ButtonProps) => (
@@ -15,13 +16,41 @@ const Button = (props: ButtonProps) => (
 )
 
 export const StyledButton = styled(Button)`
-  /* Adapt the colors based on primary prop */
-  background: ${props => (props.primary ? "palevioletred" : "white")};
-  color: ${props => (props.primary ? "white" : "palevioletred")};
-
+  cursor: pointer;
   font-size: 1em;
+  font-weight: 700;
   margin: 1em;
   padding: 0.25em 1em;
-  border: 2px solid palevioletred;
   border-radius: 3px;
+  transition: 0.3s;
+  &:hover {
+    background: rgba(255, 255, 255, 0.3)
+  };
+  ${props => {
+    if (props.kind === "vanilla") {
+      return `
+        background: rgba(0, 0, 0, 0);
+        color: ${props.theme.colors.vanilla};
+        border: 2px solid ${props.theme.colors.vanilla};
+      `
+    } else if (props.kind === "mild") {
+      return `
+        background: rgba(0, 0, 0, 0);
+        color: ${props.theme.colors.mild};
+        border: 2px solid ${props.theme.colors.mild};
+      `
+    } else if (props.kind === "medium") {
+      return `
+        background: rgba(0, 0, 0, 0);
+        color: ${props.theme.colors.medium};
+        border: 2px solid ${props.theme.colors.medium};
+      `
+    } else if (props.kind === "max") {
+      return `
+        background: rgba(0, 0, 0, 0);
+        color: ${props.theme.colors.max};
+        border: 2px solid ${props.theme.colors.max};
+      `
+    }
+  }}
 `

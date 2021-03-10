@@ -23,8 +23,9 @@ const GlobalStyle = createGlobalStyle`
   main {
     font-family: "Poppins", sans-serif;
     color: #FFFFFF;
+    margin: 0 20px;
     ${breakpoints("font-size", "rem", [
-      { 0 : 1 },
+      { 0: 1 },
       { 600: 1.2 },
       { 900: 1.4 },
       { 1200: 1.6 },
@@ -40,12 +41,21 @@ const GlobalStyle = createGlobalStyle`
 
 const theme = {
   colors: {
-    ro64: "#888888",
-    ro32: "#888888",
-    ro16: "#888888",
-    ro64: "#888888",
-    ro64: "#888888",
-    ro64: "#888888",
+    vanilla: "#F3E5AB",
+    mild: "#76FF4D",
+    medium: "#FFED4D",
+    max: "#FF914D",
+  },
+  uconn: {
+    c900: "#000e2f",
+    c800: "#172346",
+    c700: "#2f395d",
+    c600: "#475076",
+    c500: "#606890",
+    c400: "#7a81aa",
+    c300: "#949bc6",
+    c200: "#afb5e2",
+    c100: "#cbd1ff",
   },
 }
 

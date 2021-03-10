@@ -22,3 +22,22 @@ export const breakpoints = (
   }, "")
   return css([breakpointProps])
 }
+
+export const gridBreakpoints = (
+  cssProp = "padding", // the CSS property to apply to the breakpoints
+  values = [], // array of objects, e.g. [{ 800: 60 }, ...] <-- 800 (key) = screen breakpoint, 60 (value) = CSS prop breakpoint
+  mediaQueryType = "min-width" // media query breakpoint type, i.e.: max-width, min-width, max-height, min-height
+) => {
+  const breakpointProps = values.reduce((mediaQueries, value) => {
+    const [screenBreakpoint, cssString] = [
+      Object.keys(value)[0],
+      Object.values(value)[0],
+    ]
+    return (mediaQueries += `
+    @media screen and (${mediaQueryType}: ${screenBreakpoint}px) {
+      ${cssProp}: ${cssString};
+    }
+    `)
+  }, "")
+  return css([breakpointProps])
+}

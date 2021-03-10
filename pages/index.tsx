@@ -1,8 +1,9 @@
-import App from "../components/App"
+import Page from "../components/Page"
 import styled from "styled-components"
 import { Component } from "react"
 import { StyledButton } from "../components/Buttons"
-import Scorecard from "../components/Scorecard"
+import { Scorecard, BracketDiv } from "../components/Autobracket"
+import { gridBreakpoints } from "../utils/breakpoints"
 
 // This gets called on every request
 export async function getServerSideProps() {
@@ -79,30 +80,87 @@ class BracketGenerator extends Component<
     }))
   }
 
+  roundLookup(gameIndex) {
+    if (gameIndex <= 4) {
+      return "First Four"
+    } else if (gameIndex <= 36) {
+      return "Round of 64"
+    } else if (gameIndex <= 52) {
+      return "Round of 32"
+    } else if (gameIndex <= 60) {
+      return "Sweet 16"
+    } else if (gameIndex <= 64) {
+      return "Elite Eight"
+    } else if (gameIndex <= 66) {
+      return "Final Four"
+    } else if (gameIndex <= 67) {
+      return "Title Game"
+    } else {
+      return "Error!"
+    }
+  }
+
   render() {
-    let bracketForm, bracket
+    let bracket, bracketForm, methodology, credits;
+    let BracketGrid = styled.div`
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(400px, 100%), 1fr));
+    `
+    let ButtonGrid = styled.div`
+      display: grid;
+      ${gridBreakpoints("grid-template-columns", [
+        { 0: "1fr" },
+        { 800: "1fr 1fr 1fr 1fr"}
+      ])}
+    `
     if (!this.state.viewBracket) {
       bracketForm = (
-        <div>
-          <StyledButton
-            label="Vanilla (middle 20% of simulations)"
-            click={this.bracketRequested.bind(this, "none")}
-          />
-          <StyledButton
-            label="Mild (middle 50% of simulations)"
-            click={this.bracketRequested.bind(this, "mild")}
-          />
-          <StyledButton
-            label="Medium (middle 80% of simulations)"
-            click={this.bracketRequested.bind(this, "medium")}
-          />
-          <StyledButton
-            label="MAX SPICE (hope you like outliers!)"
-            click={this.bracketRequested.bind(this, "max")}
-          />
-        </div>
+        <BracketDiv>
+          <h4>How spicy would you like your bracket?</h4>
+          <ButtonGrid>
+            <StyledButton
+              kind="vanilla"
+              label="Vanilla (middle 20% of simulations)"
+              click={this.bracketRequested.bind(this, "none")}
+            />
+            <StyledButton
+              kind="mild"
+              label="Mild (middle 50% of simulations)"
+              click={this.bracketRequested.bind(this, "mild")}
+            />
+            <StyledButton
+              kind="medium"
+              label="Medium (middle 80% of simulations)"
+              click={this.bracketRequested.bind(this, "medium")}
+            />
+            <StyledButton
+              kind="max"
+              label="MAX SPICE (hope you like outliers!)"
+              click={this.bracketRequested.bind(this, "max")}
+            />
+          </ButtonGrid>
+        </BracketDiv>
       )
       bracket = <div></div>
+      methodology = <details>
+        <summary>methodology</summary>
+        <p>
+          This is an automatic bracket generator for March Madness 2021. I've
+          simulated each of the possible games in the bracket 1,000 times (full
+          methodology coming soon). When you request a bracket, the app will
+          choose from 1 of the 1,000 simulations for each game based on the
+          level of spice you specify.
+        </p>
+      </details>
+      credits = <details>
+        <summary>credits</summary>
+        <p>
+          Special thanks to <a href="https://kenpom.com">Kenpom</a> for tempo
+          data and <a href="https://fantasydata.com/">fantasydata</a> for their
+          great API!
+        </p>
+      </details>
+
     } else {
       bracketForm = (
         <div>
@@ -112,10 +170,6 @@ class BracketGenerator extends Component<
         </div>
       )
 
-      let BracketGrid = styled.div`
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(min(500px, 100%), 1fr));
-      `
       bracket = (
         <BracketGrid>
           {this.state.bracketData &&
@@ -123,6 +177,7 @@ class BracketGenerator extends Component<
               <Scorecard
                 key={index + 1}
                 gameIndex={index + 1}
+                round={this.roundLookup(index + 1)}
                 awaySeed={game.away_seed}
                 awayTeam={game.away_team}
                 homeSeed={game.home_seed}
@@ -137,25 +192,15 @@ class BracketGenerator extends Component<
     }
 
     return (
-      <App>
-        <p>
-          This is an automatic bracket generator for March Madness 2021. I've
-          simulated each of the possible games in the bracket 1,000 times (full
-          methodology coming soon). When you request a bracket, the app will
-          choose from 1 of the 1,000 simulations for each game based on the
-          level of spice you specify.
-        </p>
-
-        <p>
-          Special thanks to <a href="https://kenpom.com">Kenpom</a> for tempo
-          data and <a href="https://fantasydata.com/">fantasydata</a> for their
-          great API!
-        </p>
-
-        <span>How spicy would you like your bracket?</span>
-        <div className="form-container">{bracketForm}</div>
-        {bracket}
-      </App>
+      <Page>
+        <h1>autobracket</h1>
+        <h3>Automatic bracket generator for March Madness 2021.</h3>
+        <section>{bracketForm}</section>
+        <section>{bracket}</section>
+        To learn more about this app, click the sections below.
+        <section>{methodology}</section>
+        <section>{credits}</section>
+      </Page>
     )
   }
 }

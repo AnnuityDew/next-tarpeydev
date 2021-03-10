@@ -1,9 +1,9 @@
-import App from "../components/App"
+import Page from "../components/Page"
 
 export default function About() {
   return (
-    <App titleTwo=" - about" description="testing description override">
+    <Page titleTwo=" - about" description="testing description override">
       <p>what the heck</p>
-    </App>
+    </Page>
   )
 }

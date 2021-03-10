@@ -2,10 +2,10 @@ import React from "react"
 import SEO from "./SEO"
 import Header from "./Header"
 
-type AppProps = {
-  children: React.ReactNode;
-  titleTwo?: string;
-  description?: string;
+type PageProps = {
+  children: React.ReactNode
+  titleTwo?: string
+  description?: string
 }
 
 const defaultDesc =
@@ -13,11 +13,11 @@ const defaultDesc =
   "generate a March Madness bracket, view stats for Mildred League, " +
   "or dive into the time capsule..."
 
-const App = ({
+const Page = ({
   children,
   titleTwo = "",
   description = defaultDesc,
-}: AppProps) => (
+}: PageProps) => (
   <React.Fragment>
     <SEO titleTwo={titleTwo} description={description} />
     <Header />
@@ -25,4 +25,4 @@ const App = ({
   </React.Fragment>
 )
 
-export default App
+export default Page
