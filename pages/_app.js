@@ -1,7 +1,8 @@
 /* special "core" next.js page where we can apply global CSS */
 
 import { createGlobalStyle, ThemeProvider } from "styled-components"
-import '../styles/global.css'
+import "../styles/global.css"
+import Error from "next/error"
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -35,6 +36,15 @@ const theme = {
 }
 
 export default function App({ Component, pageProps }) {
+  /* global error handling that catches serversideprops errors */
+  if (pageProps.error) {
+    return (
+      <Error
+        statusCode={pageProps.error.statusCode}
+        title={pageProps.error.message}
+      />
+    )
+  }
   return (
     <>
       <GlobalStyle />

@@ -1,6 +1,7 @@
 import App from "../components/App"
 import { Component } from "react"
 import { StyledButton } from "../components/Buttons"
+import Scorecard from "../components/Scorecard"
 
 // This gets called on every request
 export async function getServerSideProps() {
@@ -23,10 +24,11 @@ export async function getServerSideProps() {
     },
     body: JSON.stringify(body),
   })
+  const errorCode = res.ok ? false : res
   const jwtData = await res.json()
 
   // Pass data to the page via props
-  return { props: { token: jwtData["access_token"], apiUrl: api } }
+  return { props: { errorCode, token: jwtData["access_token"], apiUrl: api } }
 }
 
 class BracketGenerator extends Component<
@@ -67,20 +69,36 @@ class BracketGenerator extends Component<
 
   bracketReset() {
     this.setState(state => ({
+      bracketData: "",
       viewBracket: false,
       bracketFlavor: null,
     }))
   }
 
   render() {
-    let bracketForm, bracket
+    if (this.props.errorCode) {
+      return <Error statusCode={this.props.errorCode} />
+    }
+    let bracketForm, bracket, bracketJSON
     if (!this.state.viewBracket) {
       bracketForm = (
         <div>
-          <StyledButton label="Vanilla (middle 20% of simulations)" click={this.bracketRequested.bind(this, "none")} />
-          <StyledButton label="Mild (middle 50% of simulations)" click={this.bracketRequested.bind(this, "mild")} />
-          <StyledButton label="Medium (middle 80% of simulations)" click={this.bracketRequested.bind(this, "medium")} />
-          <StyledButton label="MAX SPICE (hope you like outliers!)" click={this.bracketRequested.bind(this, "max")} />
+          <StyledButton
+            label="Vanilla (middle 20% of simulations)"
+            click={this.bracketRequested.bind(this, "none")}
+          />
+          <StyledButton
+            label="Mild (middle 50% of simulations)"
+            click={this.bracketRequested.bind(this, "mild")}
+          />
+          <StyledButton
+            label="Medium (middle 80% of simulations)"
+            click={this.bracketRequested.bind(this, "medium")}
+          />
+          <StyledButton
+            label="MAX SPICE (hope you like outliers!)"
+            click={this.bracketRequested.bind(this, "max")}
+          />
         </div>
       )
       bracket = <div></div>
@@ -92,14 +110,18 @@ class BracketGenerator extends Component<
           </button>
         </div>
       )
+      bracketJSON = JSON.parse(this.state.bracketData)
       bracket = (
         <div>
-          {JSON.parse(this.state.bracketData).map(game => (
-            <p key={game.away_team + game.home_team}>
-              {game.away_seed} {game.away_team} vs. {game.home_seed}{" "}
-              {game.home_team}. {game.sim_winner} wins by{" "}
-              {Math.abs(game.home_margin)}!
-            </p>
+          {bracketJSON.map(game => (
+            <Scorecard
+              awaySeed={game.away_seed}
+              awayTeam={game.away_team}
+              homeSeed={game.home_seed}
+              homeTeam={game.home_team}
+              winner={game.sim_winner}
+              margin={Math.abs(game.home_margin)}
+            />
           ))}
         </div>
       )
