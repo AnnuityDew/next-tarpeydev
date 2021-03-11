@@ -58,7 +58,7 @@ export const BracketGrid = styled.div`
 
 /* conditional CSS: https://stackoverflow.com/a/56098044 */
 let ScorecardDiv = styled.section`
-  min-height: 300px;
+  min-height: 360px;
   height: 30vh;
   display: grid;
   place-items: center center;
