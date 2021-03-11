@@ -14,16 +14,15 @@ const GlobalStyle = createGlobalStyle`
   html {
     font-family: "Lato", sans-serif;
     -webkit-text-size-adjust: 100%;
-    background-color: #000000;
-    font-size: 16px;
+    background-color: #111111;
+    margin: 0 20px;
   }
   img {
     border-style: none;
   }
-  main {
+  header, main {
     font-family: "Poppins", sans-serif;
     color: #FFFFFF;
-    margin: 0 20px;
     ${breakpoints("font-size", "rem", [
       { 0: 1 },
       { 600: 1.2 },
@@ -32,11 +31,6 @@ const GlobalStyle = createGlobalStyle`
       { 1600: 1.6 },
     ])};
   }
-  a { background-color: #000000;}
-  a:link {color: #66d9ff;}        
-  a:visited {color: #ffe066;}
-  a:hover {color: #99e6ff;}        
-  a:active {color: #99e6ff;}
 `
 
 const theme = {
@@ -56,6 +50,17 @@ const theme = {
     c300: "#949bc6",
     c200: "#afb5e2",
     c100: "#cbd1ff",
+  },
+  rainbow: {
+    red: "#7f2626",
+    orange: "#7f6126",
+    yellow: "#617f26",
+    green: "#267f26",
+    teal: "#267f61",
+    lb: "#26617f",
+    db: "#26267f",
+    purple: "#61267f",
+    pink: "#7f2661",
   },
 }
 

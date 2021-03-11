@@ -6,6 +6,8 @@ type PageProps = {
   children: React.ReactNode
   titleTwo?: string
   description?: string
+  heading?: string
+  subheading?: string
 }
 
 const defaultDesc =
@@ -17,10 +19,12 @@ const Page = ({
   children,
   titleTwo = "",
   description = defaultDesc,
+  heading = "",
+  subheading = "",
 }: PageProps) => (
   <React.Fragment>
     <SEO titleTwo={titleTwo} description={description} />
-    <Header />
+    <Header heading={heading} subheading={subheading} />
     <main>{children}</main>
   </React.Fragment>
 )
