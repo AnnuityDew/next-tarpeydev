@@ -1,14 +1,15 @@
 import styled from "styled-components"
 
 type ButtonProps = {
-  gridButton: boolean
-  label: string
-  sublabel?: string
-  kind: string
-  click: React.MouseEventHandler<HTMLButtonElement>
+  gridButton: boolean;
+  label: string;
+  sublabel?: string;
+  kind: string;
+  click: React.MouseEventHandler<HTMLButtonElement>;
   /* className essential for styled components to work!
     https://stackoverflow.com/questions/54113367/extending-styles-with-styled-components-not-working */
-  className: string
+  className: string;
+  disabled: boolean;
 }
 
 const Button = ({
@@ -18,8 +19,9 @@ const Button = ({
   kind,
   click,
   className,
+  disabled
 }: ButtonProps) => (
-  <button className={className} onClick={click}>
+  <button className={className} onClick={click} disabled={disabled}>
     <h3>{label}</h3>
     <h5>{sublabel}</h5>
   </button>

@@ -10,36 +10,24 @@ import {
 } from "../components/Autobracket"
 import { ExternalLink } from "../components/ExternalLink"
 
-// This gets called on every request
-export async function getServerSideProps() {
+
+// This gets called only on build
+export async function getStaticProps() {
   // Fetch data from external API
-  let body = {
-    grant_type: "client_credentials",
-    scope: "all_data",
-  }
   let api = ""
   if (process.env.API_ENV === "testing") {
     api = "http://127.0.0.1:8000"
   } else {
     api = "https://api.tarpey.dev"
   }
-  const res = await fetch(api + "/security/token", {
-    method: "POST",
-    headers: {
-      accept: "application/json",
-      authorization: "Basic " + process.env.OKTA_ENCODED_ID_SECRET,
-    },
-    body: JSON.stringify(body),
-  })
-  const errorCode = res.ok ? false : res
-  const jwtData = await res.json()
 
   // Pass data to the page via props
-  return { props: { errorCode, token: jwtData["access_token"], apiUrl: api } }
+  return { props: { apiUrl: api } }
 }
 
+
 class BracketGenerator extends Component<
-  { token: string; apiUrl: string },
+  { apiUrl: string },
   { viewBracket: boolean; bracketFlavor: string; bracketData: string }
 > {
   constructor(props) {
@@ -54,26 +42,22 @@ class BracketGenerator extends Component<
 
   async bracketRequested(selectedFlavor) {
     await Promise.all([
-      fetch(this.props.apiUrl + "/autobracket/bracket/2020/mild", {
+      fetch(this.props.apiUrl + `/autobracket/bracket/2021/${selectedFlavor}`, {
         method: "GET",
-        headers: {
-          accept: "application/json",
-          Authorization: "Bearer " + this.props.token,
-        },
       })
-        .then(response => {
-          return response.json()
+      .then(response => {
+        return response.json()
+      })
+      .then(jsonData => {
+        return JSON.stringify(jsonData)
+      })
+      .then(jsonString => {
+        this.setState({
+          bracketData: jsonString,
+          viewBracket: true,
+          bracketFlavor: selectedFlavor,
         })
-        .then(jsonData => {
-          return JSON.stringify(jsonData)
-        })
-        .then(jsonString => {
-          this.setState({
-            bracketData: jsonString,
-            viewBracket: true,
-            bracketFlavor: selectedFlavor,
-          })
-        }),
+      }),
     ])
   }
 
@@ -110,7 +94,7 @@ class BracketGenerator extends Component<
     if (!this.state.viewBracket) {
       bracketForm = (
         <BracketDiv>
-          <h4>How spicy would you like your bracket?</h4>
+          <h4>These buttons don't work yet. Come back on Selection Sunday!</h4>
           <ButtonGrid>
             <StyledButton
               gridButton={true}
@@ -118,6 +102,7 @@ class BracketGenerator extends Component<
               label="Vanilla"
               sublabel="(middle 20% of simulations)"
               click={this.bracketRequested.bind(this, "none")}
+              disabled={true}
             />
             <StyledButton
               gridButton={true}
@@ -125,6 +110,7 @@ class BracketGenerator extends Component<
               label="Mild"
               sublabel="(middle 50% of simulations)"
               click={this.bracketRequested.bind(this, "mild")}
+              disabled={true}
             />
             <StyledButton
               gridButton={true}
@@ -132,6 +118,7 @@ class BracketGenerator extends Component<
               label="Medium"
               sublabel="(middle 80% of simulations)"
               click={this.bracketRequested.bind(this, "medium")}
+              disabled={true}
             />
             <StyledButton
               gridButton={true}
@@ -139,6 +126,7 @@ class BracketGenerator extends Component<
               label="MAX SPICE"
               sublabel="(hope you like outliers!)"
               click={this.bracketRequested.bind(this, "max")}
+              disabled={true}
             />
           </ButtonGrid>
         </BracketDiv>
@@ -150,11 +138,15 @@ class BracketGenerator extends Component<
           <StyledDetails>
             <summary>methodology</summary>
             <p>
-              This is an automatic bracket generator for March Madness 2021.
               I've simulated each of the possible games in the bracket 1,000
-              times (full methodology coming soon). When you request a bracket,
+              times, based on each player's 2021 stats. When you request a bracket,
               the app will choose from 1 of the 1,000 simulations for each game
               based on the level of spice you specify.
+              If you'd like a deeper look at what's going on, feel free to check out
+              this <ExternalLink href="https://medium.com/analytics-vidhya/march-madness-2021-simulating-a-bracket-part-1-7aa1cad69a65">series of blog posts</ExternalLink> I
+              wrote on the model...or head over
+              to <ExternalLink href="https://github.com/AnnuityDew/api-tarpeydev/blob/master/src/api/autobracket.py">GitHub</ExternalLink> and
+              check out the full code!
             </p>
           </StyledDetails>
           <StyledDetails>
@@ -162,7 +154,7 @@ class BracketGenerator extends Component<
             <p>
               Special thanks to{" "}
               <ExternalLink href="https://kenpom.com">Kenpom</ExternalLink> for
-              tempo data and{" "}
+              their tempo/efficiency data and{" "}
               <ExternalLink href="https://fantasydata.com/">
                 fantasydata
               </ExternalLink>{" "}

@@ -1,6 +1,6 @@
 Live at https://next-tarpeydev.vercel.app/ for now
 
-Many thanks to:
+If we ever go back to Firebase...
 https://github.com/vercel/next.js/tree/canary/examples/with-firebase-hosting
 
 Secure cloud run requests
