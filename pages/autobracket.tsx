@@ -102,7 +102,7 @@ class BracketGenerator extends Component<
               label="Vanilla"
               sublabel="(middle 20% of simulations)"
               click={this.bracketRequested.bind(this, "none")}
-              disabled={true}
+              disabled={false}
             />
             <StyledButton
               gridButton={true}
@@ -110,7 +110,7 @@ class BracketGenerator extends Component<
               label="Mild"
               sublabel="(middle 50% of simulations)"
               click={this.bracketRequested.bind(this, "mild")}
-              disabled={true}
+              disabled={false}
             />
             <StyledButton
               gridButton={true}
@@ -118,7 +118,7 @@ class BracketGenerator extends Component<
               label="Medium"
               sublabel="(middle 80% of simulations)"
               click={this.bracketRequested.bind(this, "medium")}
-              disabled={true}
+              disabled={false}
             />
             <StyledButton
               gridButton={true}
@@ -126,7 +126,7 @@ class BracketGenerator extends Component<
               label="MAX SPICE"
               sublabel="(hope you like outliers!)"
               click={this.bracketRequested.bind(this, "max")}
-              disabled={true}
+              disabled={false}
             />
           </ButtonGrid>
         </BracketDiv>
