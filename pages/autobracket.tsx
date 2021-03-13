@@ -2,6 +2,7 @@ import Page from "../components/Page"
 import { Component } from "react"
 import { StyledButton } from "../components/Buttons"
 import {
+  Instructions,
   FirstFour,
   FirstFourGrid,
   RegionsContainer,
@@ -15,7 +16,6 @@ import {
   PlayerBoxScorecard,
 } from "../components/Autobracket"
 import { ExternalLink } from "../components/ExternalLink"
-
 
 // This gets called only on build
 export async function getStaticProps() {
@@ -31,10 +31,15 @@ export async function getStaticProps() {
   return { props: { apiUrl: api } }
 }
 
-
 class BracketGenerator extends Component<
   { apiUrl: string },
-  { viewBracket: boolean; viewBoxScore: boolean; bracketFlavor: string; bracketData: string; boxScoreData: string; }
+  {
+    viewBracket: boolean
+    viewBoxScore: boolean
+    bracketFlavor: string
+    bracketData: string
+    boxScoreData: string
+  }
 > {
   constructor(props) {
     super(props)
@@ -53,19 +58,19 @@ class BracketGenerator extends Component<
       fetch(this.props.apiUrl + `/autobracket/bracket/2021/${selectedFlavor}`, {
         method: "GET",
       })
-      .then(response => {
-        return response.json()
-      })
-      .then(jsonData => {
-        return JSON.stringify(jsonData)
-      })
-      .then(jsonString => {
-        this.setState({
-          bracketData: jsonString,
-          viewBracket: true,
-          bracketFlavor: selectedFlavor,
+        .then(response => {
+          return response.json()
         })
-      }),
+        .then(jsonData => {
+          return JSON.stringify(jsonData)
+        })
+        .then(jsonString => {
+          this.setState({
+            bracketData: jsonString,
+            viewBracket: true,
+            bracketFlavor: selectedFlavor,
+          })
+        }),
     ])
   }
 
@@ -83,19 +88,19 @@ class BracketGenerator extends Component<
       fetch(this.props.apiUrl + `/autobracket/game/${boxScoreId}`, {
         method: "GET",
       })
-      .then(response => {
-        return response.json()
-      })
-      .then(jsonData => {
-        return JSON.stringify(jsonData)
-      })
-      .then(jsonString => {
-        this.setState({
-          boxScoreData: jsonString,
-          viewBracket: false,
-          viewBoxScore: true,
+        .then(response => {
+          return response.json()
         })
-      }),
+        .then(jsonData => {
+          return JSON.stringify(jsonData)
+        })
+        .then(jsonString => {
+          this.setState({
+            boxScoreData: jsonString,
+            viewBracket: false,
+            viewBoxScore: true,
+          })
+        }),
     ])
   }
 
@@ -126,13 +131,13 @@ class BracketGenerator extends Component<
   }
 
   regionLookup(game, regionList) {
-    return regionList.includes(game);
+    return regionList.includes(game)
   }
 
   render() {
     const firstFourInfo = {
       "First Four": [0, 1, 2, 3],
-    };
+    }
     const regionInfo = {
       "West Upper": [4, 5, 6, 7, 36, 37, 52],
       "West Lower": [8, 9, 10, 11, 38, 39, 53],
@@ -143,8 +148,8 @@ class BracketGenerator extends Component<
       "Midwest Upper": [28, 29, 30, 31, 48, 49, 58],
       "Midwest Lower": [32, 33, 34, 35, 50, 51, 59],
       "Elite Eight": [60, 61, 62, 63, 64, 65, 66, 67],
-    };
-    let bracket, bracketForm, appNotes, bracketReset, boxScore, returnToBracket;
+    }
+    let bracket, bracketForm, appNotes, bracketReset, boxScore, returnToBracket
     if (!this.state.viewBracket && !this.state.viewBoxScore) {
       bracketForm = (
         <BracketDiv>
@@ -193,14 +198,18 @@ class BracketGenerator extends Component<
             <summary>methodology</summary>
             <p>
               I've simulated each of the possible games in the bracket 1,000
-              times, based on each player's 2021 stats. When you request a bracket,
-              the app will choose from 1 of the 1,000 simulations for each game
-              based on the level of spice you specify.
-              If you'd like a deeper look at what's going on, feel free to check out
-              this <ExternalLink href="https://medium.com/analytics-vidhya/march-madness-2021-simulating-a-bracket-part-1-7aa1cad69a65">series of blog posts</ExternalLink> I
-              wrote on the model...or head over
-              to <ExternalLink href="https://github.com/AnnuityDew/api-tarpeydev/blob/master/src/api/autobracket.py">GitHub</ExternalLink> and
-              check out the full code!
+              times, based on each player's 2021 stats. When you request a
+              bracket, the app will choose from 1 of the 1,000 simulations for
+              each game based on the level of spice you specify. If you'd like a
+              deeper look at what's going on, feel free to check out this{" "}
+              <ExternalLink href="https://medium.com/analytics-vidhya/march-madness-2021-simulating-a-bracket-part-1-7aa1cad69a65">
+                series of blog posts
+              </ExternalLink>{" "}
+              I wrote on the model...or head over to{" "}
+              <ExternalLink href="https://github.com/AnnuityDew/api-tarpeydev/blob/master/src/api/autobracket.py">
+                GitHub
+              </ExternalLink>{" "}
+              and check out the full code!
             </p>
           </StyledDetails>
           <StyledDetails>
@@ -220,35 +229,52 @@ class BracketGenerator extends Component<
     } else if (this.state.viewBracket) {
       bracket = (
         <section>
+          <Instructions hot={false}>Your simulated bracket is below! Use this to fill out an empty bracket on any site 
+            you're competing on.</Instructions>
+          <Instructions hot={true}>NEW THIS YEAR: you can click on any game in the bracket to view its simulated box score!</Instructions>
           <FirstFour region="First Four">
             <FirstFourGrid>
               {this.state.bracketData &&
-                JSON.parse(this.state.bracketData).filter((game, index) => firstFourInfo["First Four"].includes(index)).map((game, index) => (
-                  <MiniScorecard
-                    click={this.boxScoreRequested.bind(this, game.sim_ObjectId)}
-                    key={index + 1}
-                    gameData={game}
-                    gameIndex={index + 1}
-                    round={this.roundLookup(index + 1)}
-                  />
-                ))}
+                JSON.parse(this.state.bracketData)
+                  .filter((game, index) =>
+                    firstFourInfo["First Four"].includes(index)
+                  )
+                  .map((game, index) => (
+                    <MiniScorecard
+                      click={this.boxScoreRequested.bind(
+                        this,
+                        game.sim_ObjectId
+                      )}
+                      key={index + 1}
+                      gameData={game}
+                      gameIndex={index + 1}
+                      round={this.roundLookup(index + 1)}
+                    />
+                  ))}
             </FirstFourGrid>
           </FirstFour>
           <RegionsContainer>
-            {Object.keys(regionInfo).map((region) => (
+            {Object.keys(regionInfo).map(region => (
               <HalfRegion key={region} region={region}>
                 <SevenGameGrid>
                   {this.state.bracketData &&
-                    JSON.parse(this.state.bracketData).filter((game, index) => regionInfo[region].includes(index)).map((game, index) => (
-                      <MiniScorecard
-                        click={this.boxScoreRequested.bind(this, game.sim_ObjectId)}
-                        key={index + 1}
-                        cssGame={"game".concat((index + 1).toString())}
-                        gameData={game}
-                        gameIndex={index + 1}
-                        round={this.roundLookup(index + 1)}
-                      />
-                    ))}
+                    JSON.parse(this.state.bracketData)
+                      .filter((game, index) =>
+                        regionInfo[region].includes(index)
+                      )
+                      .map((game, index) => (
+                        <MiniScorecard
+                          click={this.boxScoreRequested.bind(
+                            this,
+                            game.sim_ObjectId
+                          )}
+                          key={index + 1}
+                          cssGame={"game".concat((index + 1).toString())}
+                          gameData={game}
+                          gameIndex={index + 1}
+                          round={this.roundLookup(index + 1)}
+                        />
+                      ))}
                 </SevenGameGrid>
               </HalfRegion>
             ))}
@@ -272,11 +298,11 @@ class BracketGenerator extends Component<
           {JSON.parse(this.state.boxScoreData).map((data, index) => (
             <TeamBoxScorecard teamData={data["team_box_score"]} />
           ))}
-          {JSON.parse(this.state.boxScoreData).map((data, index) => (
+          {JSON.parse(this.state.boxScoreData).map((data, index) =>
             Object.keys(data["full_box_score"]).map((player, index) => (
               <PlayerBoxScorecard playerData={data["full_box_score"][player]} />
             ))
-          ))}
+          )}
         </div>
       )
       returnToBracket = (
@@ -285,8 +311,8 @@ class BracketGenerator extends Component<
           label="Return to the bracket I made"
           click={this.boxScoreReset.bind(this)}
         />
-      );
-    };
+      )
+    }
 
     return (
       <Page

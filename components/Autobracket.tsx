@@ -40,8 +40,10 @@ interface ScorecardProps {
   round: string
 }
 
-let UnstyledMiniGameDiv = ({click, cssGame, className, children}) => (
-  <div onClick={click} className={`${cssGame} ${className}`}>{children}</div>
+let UnstyledMiniGameDiv = ({ click, cssGame, className, children }) => (
+  <div onClick={click} className={`${cssGame} ${className}`}>
+    {children}
+  </div>
 )
 
 let MiniGameDiv = styled(UnstyledMiniGameDiv)`
@@ -70,7 +72,9 @@ let StyledMiniTeamDiv = styled.div`
 `
 
 const MiniTeamDiv = ({ winner, seed, label }) => (
-  <StyledMiniTeamDiv winner={winner}>{seed} {label}</StyledMiniTeamDiv>
+  <StyledMiniTeamDiv winner={winner}>
+    {seed} {label}
+  </StyledMiniTeamDiv>
 )
 
 export const BracketDiv = styled.div`
@@ -121,7 +125,7 @@ export const FirstFourGrid = styled.div`
   ])}
 `
 
-let UnstyledFirstFour = ({region, className, children}) => {
+let UnstyledFirstFour = ({ region, className, children }) => {
   return (
     <section className={className}>
       <h3>{region}</h3>
@@ -141,35 +145,49 @@ export const FirstFour = styled(UnstyledFirstFour)`
   padding: 10px;
 `
 
-export function MiniScorecard({
-  click,
-  cssGame,
-  gameData
-}: ScorecardProps) {
+export function MiniScorecard({ click, cssGame, gameData }: ScorecardProps) {
   if (gameData.sim_winner === gameData.away_key) {
     return (
       <MiniGameDiv click={click} cssGame={cssGame}>
-        <MiniTeamDiv winner={true} label={gameData.away_key} seed={gameData.away_seed} />
-        <MiniTeamDiv winner={false} label={gameData.home_key} seed={gameData.home_seed} />
-        <h6>{gameData.away_school} wins by {Math.abs(gameData.home_margin)}</h6>
+        <MiniTeamDiv
+          winner={true}
+          label={gameData.away_key}
+          seed={gameData.away_seed}
+        />
+        <MiniTeamDiv
+          winner={false}
+          label={gameData.home_key}
+          seed={gameData.home_seed}
+        />
+        <h6>
+          {gameData.away_school} wins by {Math.abs(gameData.home_margin)}
+        </h6>
       </MiniGameDiv>
     )
   } else if (gameData.sim_winner === gameData.home_key) {
     return (
       <MiniGameDiv click={click} cssGame={cssGame}>
-        <MiniTeamDiv winner={false} label={gameData.away_key} seed={gameData.away_seed} />
-        <MiniTeamDiv winner={true} label={gameData.home_key} seed={gameData.home_seed} />
-        <h6>{gameData.home_school} wins by {Math.abs(gameData.home_margin)}</h6>
+        <MiniTeamDiv
+          winner={false}
+          label={gameData.away_key}
+          seed={gameData.away_seed}
+        />
+        <MiniTeamDiv
+          winner={true}
+          label={gameData.home_key}
+          seed={gameData.home_seed}
+        />
+        <h6>
+          {gameData.home_school} wins by {Math.abs(gameData.home_margin)}
+        </h6>
       </MiniGameDiv>
     )
   } else {
-    return (
-      <h6>Error!</h6> 
-    )
-  };
+    return <h6>Error!</h6>
+  }
 }
 
-let UnstyledHalfRegion = ({region, className, children}) => {
+let UnstyledHalfRegion = ({ region, className, children }) => {
   return (
     <section className={className}>
       <h3>{region}</h3>
@@ -185,7 +203,10 @@ export const HalfRegion = styled(UnstyledHalfRegion)`
       return `
         background: ${props.theme.rainbow.red};
       `
-    } else if (props.region === "South Upper" || props.region === "South Lower") {
+    } else if (
+      props.region === "South Upper" ||
+      props.region === "South Lower"
+    ) {
       return `
         background: ${props.theme.rainbow.teal};
       `
@@ -193,7 +214,10 @@ export const HalfRegion = styled(UnstyledHalfRegion)`
       return `
         background: ${props.theme.rainbow.lb};
       `
-    } else if (props.region === "Midwest Upper" || props.region === "Midwest Lower") {
+    } else if (
+      props.region === "Midwest Upper" ||
+      props.region === "Midwest Lower"
+    ) {
       return `
         background: ${props.theme.rainbow.pink};
       `
@@ -228,31 +252,25 @@ export const StyledDetails = styled.details`
   margin: 20px 0;
 `
 
-const UnstyledTeamBoxScorecard = ({className, teamData}) => {
+const UnstyledTeamBoxScorecard = ({ className, teamData }) => {
   var teams = Object.keys(teamData)
   return (
     <section className={className}>
       {/* first team's stats */}
       <h5>{teams[0]}</h5>
-      {
-        Object.keys(teamData[teams[0]]).map((stat => 
-          <span>{teamData[teams[0]][stat]}</span>
-        ))
-      }
+      {Object.keys(teamData[teams[0]]).map(stat => (
+        <span>{teamData[teams[0]][stat]}</span>
+      ))}
       {/* stat names */}
       <h5>Category</h5>
-      {
-        Object.keys(teamData[teams[0]]).map((stat => 
-          <h6>{stat}</h6>
-        ))
-      }
+      {Object.keys(teamData[teams[0]]).map(stat => (
+        <h6>{stat}</h6>
+      ))}
       {/* second team's stats */}
       <h5>{teams[1]}</h5>
-      {
-        Object.keys(teamData[teams[1]]).map((stat => 
-          <span>{teamData[teams[1]][stat]}</span>
-        ))
-      }
+      {Object.keys(teamData[teams[1]]).map(stat => (
+        <span>{teamData[teams[1]][stat]}</span>
+      ))}
     </section>
   )
 }
@@ -273,15 +291,15 @@ export const TeamBoxScorecard = styled(UnstyledTeamBoxScorecard)`
   background: ${props => props.theme.uconn.c700};
 `
 
-const UnstyledPlayerBoxScorecard = ({className, playerData}) => {
+const UnstyledPlayerBoxScorecard = ({ className, playerData }) => {
   return (
     <section className={className}>
       {/* field names */}
-      {Object.keys(playerData).map((stat) => (
+      {Object.keys(playerData).map(stat => (
         <h6>{stat}</h6>
       ))}
       {/* field values */}
-      {Object.keys(playerData).map((stat) => (
+      {Object.keys(playerData).map(stat => (
         <span>{playerData[stat]}</span>
       ))}
     </section>
@@ -302,4 +320,26 @@ export const PlayerBoxScorecard = styled(UnstyledPlayerBoxScorecard)`
   grid-template-columns: 1fr 10fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   background: ${props => props.theme.uconn.c700};
+`
+
+export const Instructions = styled.section`
+  margin: 10px 0;
+  padding: 10px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: white;
+  border-radius: 10px;
+  font-weight: 700;
+  color: black;
+  ${props => {
+    if (props.hot) {
+      return `
+        background: #FFBAFA;
+      `
+    } else {
+      return `
+        background: ${props.theme.uconn.c200};
+      `
+    }
+  }}
 `
