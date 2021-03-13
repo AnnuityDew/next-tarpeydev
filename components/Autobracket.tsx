@@ -123,7 +123,7 @@ export function Scorecard({
           </TeamDiv>
           <TeamDiv winner={false}>
             <h3>{homeSeed}</h3>
-            <h2>{homeSchool}</h2>
+            <h4>{homeSchool}</h4>
           </TeamDiv>
         </GameDiv>
         <h6>View box score: {boxScoreId}</h6>
