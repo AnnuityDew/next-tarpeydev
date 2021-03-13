@@ -35,10 +35,6 @@ let TeamDiv = styled.div`
       : "conic-gradient(from -90deg at top left, black, white)"};
 `
 
-let SeedSpan = styled.span`
-  font-size: 65%;
-`
-
 export const BracketDiv = styled.div`
   background: ${props => props.theme.uconn.c700};
   border-width: 2px;
@@ -121,12 +117,12 @@ export function Scorecard({
         <h4>{region} - {round}</h4>
         <GameDiv>
           <TeamDiv winner={true}>
-            <SeedSpan>{awaySeed}</SeedSpan>
-            <h2>{awaySchool}</h2>
+            <h3>{awaySeed}</h3>
+            <h4>{awaySchool}</h4>
             <span>Wins by {margin}</span>
           </TeamDiv>
           <TeamDiv winner={false}>
-            <SeedSpan>{homeSeed}</SeedSpan>
+            <h3>{homeSeed}</h3>
             <h2>{homeSchool}</h2>
           </TeamDiv>
         </GameDiv>
@@ -140,12 +136,12 @@ export function Scorecard({
         <h4>{region} - {round}</h4>
         <GameDiv>
           <TeamDiv winner={false}>
-            <SeedSpan>{awaySeed}</SeedSpan>
-            <h2>{awaySchool}</h2>
+            <h3>{awaySeed}</h3>
+            <h4>{awaySchool}</h4>
           </TeamDiv>
           <TeamDiv winner={true}>
-            <SeedSpan>{homeSeed}</SeedSpan>
-            <h2>{homeSchool}</h2>
+            <h3>{homeSeed}</h3>
+            <h4>{homeSchool}</h4>
             <span>Wins by {margin}</span>
           </TeamDiv>
         </GameDiv>
