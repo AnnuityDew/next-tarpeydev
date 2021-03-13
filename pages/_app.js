@@ -14,7 +14,7 @@ const GlobalStyle = createGlobalStyle`
   html {
     font-family: "Lato", sans-serif;
     -webkit-text-size-adjust: 100%;
-    background-color: #111111;
+    background-color: #000925;
     margin: 0 20px;
   }
   img {

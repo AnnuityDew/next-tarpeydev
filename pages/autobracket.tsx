@@ -2,11 +2,17 @@ import Page from "../components/Page"
 import { Component } from "react"
 import { StyledButton } from "../components/Buttons"
 import {
-  Scorecard,
+  FirstFour,
+  FirstFourGrid,
+  RegionsContainer,
+  HalfRegion,
+  MiniScorecard,
   BracketDiv,
-  BracketGrid,
   ButtonGrid,
+  SevenGameGrid,
   StyledDetails,
+  TeamBoxScorecard,
+  PlayerBoxScorecard,
 } from "../components/Autobracket"
 import { ExternalLink } from "../components/ExternalLink"
 
@@ -28,15 +34,17 @@ export async function getStaticProps() {
 
 class BracketGenerator extends Component<
   { apiUrl: string },
-  { viewBracket: boolean; bracketFlavor: string; bracketData: string }
+  { viewBracket: boolean; viewBoxScore: boolean; bracketFlavor: string; bracketData: string; boxScoreData: string; }
 > {
   constructor(props) {
     super(props)
 
     this.state = {
       viewBracket: false,
+      viewBoxScore: false,
       bracketFlavor: null,
       bracketData: "",
+      boxScoreData: "",
     }
   }
 
@@ -64,34 +72,80 @@ class BracketGenerator extends Component<
   bracketReset() {
     this.setState(state => ({
       bracketData: "",
+      boxScoreData: "",
       viewBracket: false,
       bracketFlavor: null,
     }))
   }
 
+  async boxScoreRequested(boxScoreId) {
+    await Promise.all([
+      fetch(this.props.apiUrl + `/autobracket/game/${boxScoreId}`, {
+        method: "GET",
+      })
+      .then(response => {
+        return response.json()
+      })
+      .then(jsonData => {
+        return JSON.stringify(jsonData)
+      })
+      .then(jsonString => {
+        this.setState({
+          boxScoreData: jsonString,
+          viewBracket: false,
+          viewBoxScore: true,
+        })
+      }),
+    ])
+  }
+
+  boxScoreReset() {
+    this.setState(state => ({
+      viewBracket: true,
+    }))
+  }
+
   roundLookup(gameIndex) {
     if (gameIndex <= 4) {
-      return "First Four"
+      return " - First Four"
     } else if (gameIndex <= 36) {
-      return "Round of 64"
+      return " - Round of 64"
     } else if (gameIndex <= 52) {
-      return "Round of 32"
+      return " - Round of 32"
     } else if (gameIndex <= 60) {
-      return "Sweet 16"
+      return " - Sweet 16"
     } else if (gameIndex <= 64) {
-      return "Elite Eight"
+      return " - Elite Eight"
     } else if (gameIndex <= 66) {
-      return "Final Four"
+      return ""
     } else if (gameIndex <= 67) {
-      return "Title Game"
+      return ""
     } else {
       return "Error!"
     }
   }
 
+  regionLookup(game, regionList) {
+    return regionList.includes(game);
+  }
+
   render() {
-    let bracket, bracketForm, appNotes, bracketReset
-    if (!this.state.viewBracket) {
+    const firstFourInfo = {
+      "First Four": [0, 1, 2, 3],
+    };
+    const regionInfo = {
+      "West Upper": [4, 5, 6, 7, 36, 37, 52],
+      "West Lower": [8, 9, 10, 11, 38, 39, 53],
+      "South Upper": [12, 13, 14, 15, 40, 41, 54],
+      "South Lower": [16, 17, 18, 19, 42, 43, 55],
+      "East Upper": [20, 21, 22, 23, 44, 45, 56],
+      "East Lower": [24, 25, 26, 27, 46, 47, 57],
+      "Midwest Upper": [28, 29, 30, 31, 48, 49, 58],
+      "Midwest Lower": [32, 33, 34, 35, 50, 51, 59],
+      "Elite Eight": [60, 61, 62, 63, 64, 65, 66, 67],
+    };
+    let bracket, bracketForm, appNotes, bracketReset, boxScore, returnToBracket;
+    if (!this.state.viewBracket && !this.state.viewBoxScore) {
       bracketForm = (
         <BracketDiv>
           <h4>These buttons don't work yet. Come back on Selection Sunday!</h4>
@@ -163,26 +217,43 @@ class BracketGenerator extends Component<
           </StyledDetails>
         </div>
       )
-    } else {
+    } else if (this.state.viewBracket) {
       bracket = (
-        <BracketGrid>
-          {this.state.bracketData &&
-            JSON.parse(this.state.bracketData).map((game, index) => (
-              <Scorecard
-                key={index + 1}
-                gameIndex={index + 1}
-                region={game.region}
-                round={this.roundLookup(index + 1)}
-                awaySeed={game.away_seed}
-                awaySchool={game.away_school}
-                homeSeed={game.home_seed}
-                homeSchool={game.home_school}
-                winner={game.sim_winner}
-                margin={Math.abs(game.home_margin)}
-                boxScoreId={game.sim_ObjectId}
-              />
+        <section>
+          <FirstFour region="First Four">
+            <FirstFourGrid>
+              {this.state.bracketData &&
+                JSON.parse(this.state.bracketData).filter((game, index) => firstFourInfo["First Four"].includes(index)).map((game, index) => (
+                  <MiniScorecard
+                    click={this.boxScoreRequested.bind(this, game.sim_ObjectId)}
+                    key={index + 1}
+                    gameData={game}
+                    gameIndex={index + 1}
+                    round={this.roundLookup(index + 1)}
+                  />
+                ))}
+            </FirstFourGrid>
+          </FirstFour>
+          <RegionsContainer>
+            {Object.keys(regionInfo).map((region) => (
+              <HalfRegion key={region} region={region}>
+                <SevenGameGrid>
+                  {this.state.bracketData &&
+                    JSON.parse(this.state.bracketData).filter((game, index) => regionInfo[region].includes(index)).map((game, index) => (
+                      <MiniScorecard
+                        click={this.boxScoreRequested.bind(this, game.sim_ObjectId)}
+                        key={index + 1}
+                        cssGame={"game".concat((index + 1).toString())}
+                        gameData={game}
+                        gameIndex={index + 1}
+                        round={this.roundLookup(index + 1)}
+                      />
+                    ))}
+                </SevenGameGrid>
+              </HalfRegion>
             ))}
-        </BracketGrid>
+          </RegionsContainer>
+        </section>
       )
       bracketReset = (
         <div>
@@ -195,7 +266,27 @@ class BracketGenerator extends Component<
           />
         </div>
       )
-    }
+    } else if (this.state.viewBoxScore) {
+      boxScore = (
+        <div>
+          {JSON.parse(this.state.boxScoreData).map((data, index) => (
+            <TeamBoxScorecard teamData={data["team_box_score"]} />
+          ))}
+          {JSON.parse(this.state.boxScoreData).map((data, index) => (
+            Object.keys(data["full_box_score"]).map((player, index) => (
+              <PlayerBoxScorecard playerData={data["full_box_score"][player]} />
+            ))
+          ))}
+        </div>
+      )
+      returnToBracket = (
+        <StyledButton
+          gridButton={false}
+          label="Return to the bracket I made"
+          click={this.boxScoreReset.bind(this)}
+        />
+      );
+    };
 
     return (
       <Page
@@ -206,9 +297,11 @@ class BracketGenerator extends Component<
         subheading="Automatic bracket generator for March Madness 2021."
       >
         <section>{bracketForm}</section>
-        <section>{bracket}</section>
+        {bracket}
         <section>{bracketReset}</section>
         <section>{appNotes}</section>
+        <section>{boxScore}</section>
+        <section>{returnToBracket}</section>
       </Page>
     )
   }
