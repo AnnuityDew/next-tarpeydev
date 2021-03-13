@@ -3,11 +3,12 @@ import { gridBreakpoints } from "../utils/breakpoints"
 
 type ScorecardProps = {
   gameIndex: number
+  region: string
   round: string
   awaySeed: string
-  awayTeam: string
+  awaySchool: string
   homeSeed: string
-  homeTeam: string
+  homeSchool: string
   winner: string
   margin: number
   boxScoreId: string
@@ -102,30 +103,31 @@ let ScorecardDiv = styled.section`
 
 export function Scorecard({
   gameIndex,
+  region,
   round,
   awaySeed,
-  awayTeam,
+  awaySchool,
   homeSeed,
-  homeTeam,
+  homeSchool,
   margin,
   winner,
   boxScoreId,
 }: ScorecardProps) {
   let scorecard
-  if (winner === awayTeam) {
+  if (winner === awaySchool) {
     scorecard = (
       <ScorecardDiv round={round}>
         <h3>Game {gameIndex}</h3>
-        <h3>{round}</h3>
+        <h4>{region} - {round}</h4>
         <GameDiv>
           <TeamDiv winner={true}>
             <SeedSpan>{awaySeed}</SeedSpan>
-            <h2>{awayTeam}</h2>
+            <h2>{awaySchool}</h2>
             <span>Wins by {margin}</span>
           </TeamDiv>
           <TeamDiv winner={false}>
             <SeedSpan>{homeSeed}</SeedSpan>
-            <h2>{homeTeam}</h2>
+            <h2>{homeSchool}</h2>
           </TeamDiv>
         </GameDiv>
         <h6>View box score: {boxScoreId}</h6>
@@ -135,15 +137,15 @@ export function Scorecard({
     scorecard = (
       <ScorecardDiv round={round}>
         <h3>Game {gameIndex}</h3>
-        <h3>{round}</h3>
+        <h4>{region} - {round}</h4>
         <GameDiv>
           <TeamDiv winner={false}>
             <SeedSpan>{awaySeed}</SeedSpan>
-            <h2>{awayTeam}</h2>
+            <h2>{awaySchool}</h2>
           </TeamDiv>
           <TeamDiv winner={true}>
             <SeedSpan>{homeSeed}</SeedSpan>
-            <h2>{homeTeam}</h2>
+            <h2>{homeSchool}</h2>
             <span>Wins by {margin}</span>
           </TeamDiv>
         </GameDiv>

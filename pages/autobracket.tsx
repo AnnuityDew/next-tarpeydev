@@ -171,11 +171,12 @@ class BracketGenerator extends Component<
               <Scorecard
                 key={index + 1}
                 gameIndex={index + 1}
+                region={game.region}
                 round={this.roundLookup(index + 1)}
                 awaySeed={game.away_seed}
-                awayTeam={game.away_team}
+                awaySchool={game.away_school}
                 homeSeed={game.home_seed}
-                homeTeam={game.home_team}
+                homeSchool={game.home_school}
                 winner={game.sim_winner}
                 margin={Math.abs(game.home_margin)}
                 boxScoreId={game.sim_ObjectId}
