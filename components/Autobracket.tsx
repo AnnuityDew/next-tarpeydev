@@ -259,17 +259,17 @@ const UnstyledTeamBoxScorecard = ({ className, teamData }) => {
       {/* first team's stats */}
       <h5>{teams[0]}</h5>
       {Object.keys(teamData[teams[0]]).map(stat => (
-        <span>{teamData[teams[0]][stat]}</span>
+        <span key={stat}>{teamData[teams[0]][stat]}</span>
       ))}
       {/* stat names */}
       <h5>Category</h5>
       {Object.keys(teamData[teams[0]]).map(stat => (
-        <h6>{stat}</h6>
+        <h6 key={stat}>{stat}</h6>
       ))}
       {/* second team's stats */}
       <h5>{teams[1]}</h5>
       {Object.keys(teamData[teams[1]]).map(stat => (
-        <span>{teamData[teams[1]][stat]}</span>
+        <span key={stat}>{teamData[teams[1]][stat]}</span>
       ))}
     </section>
   )
@@ -291,16 +291,16 @@ export const TeamBoxScorecard = styled(UnstyledTeamBoxScorecard)`
   background: ${props => props.theme.uconn.c700};
 `
 
-const UnstyledPlayerBoxScorecard = ({ className, playerData }) => {
+const UnstyledPlayerBoxScorecard = ({ key, className, playerData }) => {
   return (
     <section className={className}>
       {/* field names */}
       {Object.keys(playerData).map(stat => (
-        <h6>{stat}</h6>
+        <h6 key={stat}>{stat}</h6>
       ))}
       {/* field values */}
       {Object.keys(playerData).map(stat => (
-        <span>{playerData[stat]}</span>
+        <span key={stat}>{playerData[stat]}</span>
       ))}
     </section>
   )

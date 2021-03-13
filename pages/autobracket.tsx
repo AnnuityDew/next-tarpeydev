@@ -296,11 +296,11 @@ class BracketGenerator extends Component<
       boxScore = (
         <div>
           {JSON.parse(this.state.boxScoreData).map((data, index) => (
-            <TeamBoxScorecard teamData={data["team_box_score"]} />
+            <TeamBoxScorecard key={index} teamData={data["team_box_score"]} />
           ))}
           {JSON.parse(this.state.boxScoreData).map((data, index) =>
             Object.keys(data["full_box_score"]).map((player, index) => (
-              <PlayerBoxScorecard playerData={data["full_box_score"][player]} />
+              <PlayerBoxScorecard key={index} playerData={data["full_box_score"][player]} />
             ))
           )}
         </div>
@@ -326,6 +326,7 @@ class BracketGenerator extends Component<
         {bracket}
         <section>{bracketReset}</section>
         <section>{appNotes}</section>
+        <section>{returnToBracket}</section>
         <section>{boxScore}</section>
         <section>{returnToBracket}</section>
       </Page>
