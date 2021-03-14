@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import { gridBreakpoints } from "../utils/breakpoints"
+import numeral from "numeral"
 
 interface ScorecardData {
   region: string
@@ -100,6 +101,13 @@ export const RegionsContainer = styled.div`
   display: grid;
   grid-gap: 10px;
   grid-template-columns: repeat(auto-fill, minmax(min(800px, 100%), 1fr));
+`
+
+export const PlayerBoxGrid = styled.div`
+  padding: 0;
+  display: grid;
+  grid-gap: 10px 15px;
+  grid-template-columns: repeat(auto-fill, minmax(min(600px, 100%), 1fr));
 `
 
 export const SevenGameGrid = styled.div`
@@ -300,14 +308,17 @@ const UnstyledPlayerBoxScorecard = ({ key, className, playerData }) => {
       ))}
       {/* field values */}
       {Object.keys(playerData).map(stat => (
-        <span key={stat}>{playerData[stat]}</span>
+        
+        <h6 key={stat}>
+          {(stat === "Name") ? playerData[stat] : numeral(playerData[stat]).format(0)}
+        </h6>
       ))}
     </section>
   )
 }
 
 export const PlayerBoxScorecard = styled(UnstyledPlayerBoxScorecard)`
-  margin: 10px 0;
+  margin: 5px 0;
   padding: 10px;
   border-width: 2px;
   border-style: solid;
@@ -317,8 +328,8 @@ export const PlayerBoxScorecard = styled(UnstyledPlayerBoxScorecard)`
   place-items: center center;
   grid-gap: 0px;
   grid-auto-flow: column;
-  grid-template-columns: 1fr 10fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   background: ${props => props.theme.uconn.c700};
 `
 

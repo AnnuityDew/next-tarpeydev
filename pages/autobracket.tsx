@@ -14,6 +14,7 @@ import {
   StyledDetails,
   TeamBoxScorecard,
   PlayerBoxScorecard,
+  PlayerBoxGrid,
 } from "../components/Autobracket"
 import { ExternalLink } from "../components/ExternalLink"
 
@@ -327,14 +328,16 @@ class BracketGenerator extends Component<
           {JSON.parse(this.state.boxScoreData).map((data, index) => (
             <TeamBoxScorecard key={index} teamData={data["team_box_score"]} />
           ))}
-          {JSON.parse(this.state.boxScoreData).map((data, index) =>
-            Object.keys(data["full_box_score"]).map((player, index) => (
-              <PlayerBoxScorecard
-                key={index}
-                playerData={data["full_box_score"][player]}
-              />
-            ))
-          )}
+          <PlayerBoxGrid>
+            {JSON.parse(this.state.boxScoreData).map((data, index) =>
+              Object.keys(data["full_box_score"]).map((player, index) => (
+                <PlayerBoxScorecard
+                  key={index}
+                  playerData={data["full_box_score"][player]}
+                />
+              ))
+            )}
+          </PlayerBoxGrid>
         </div>
       )
       returnToBracket = (
@@ -351,6 +354,8 @@ class BracketGenerator extends Component<
         titleTwo=" - autobracket"
         description="Mike Tarpey's March Madness bracket generator.
       This year's iteration includes a full Monte Carlo simulation program!"
+        url="https://tarpey.dev/autobracket"
+        urlImage="https://tarpey.dev/autobracket.png"
         heading="autobracket"
         subheading="Automatic bracket generator for March Madness 2021."
       >
