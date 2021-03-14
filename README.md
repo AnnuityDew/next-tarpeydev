@@ -3,10 +3,11 @@
 Mike Tarpey's app playground. Search for a game in the backlog, generate a March Madness bracket, view stats for Mildred League, or dive into the time capsule...
 
 **(Feedback is welcome - I'm self-taught and looking to learn more!)**
+* [Twitter](https://twitter.com/MichaelTarpey)
 
 ## URLs
 * Live: [tarpey.dev](https://api.tarpey.dev/)
-* Preview: [https://next-tarpeydev-git-dev-annuitydew.vercel.app](go here!) (unless I broke something)
+* Preview: [go here!](https://next-tarpeydev-git-dev-annuitydew.vercel.app) (unless I broke something)
 
 ## Key Packages
 * [Styled Components](https://styled-components.com) for CSS-in-JS
