@@ -43,6 +43,8 @@ function SEO({ titleTwo, description, url, urlImage }: HeadProps) {
         <meta property="og:description" content={description} />
         <meta property="og:url" content={url} />
         <meta property="og:image" content={urlImage} />
+        <meta name="twitter:image" content={urlImage} />
+        <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image"></meta>
         <meta property="og:site_name" content="tarpey's apps"></meta>
       </Head>
