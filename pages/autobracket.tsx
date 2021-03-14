@@ -166,7 +166,7 @@ class BracketGenerator extends Component<
             <StyledButton
               gridButton={true}
               kind="vanilla"
-              label="Vanilla"
+              label={this.state.vanillaLoading ? "Loading..." : "Vanilla"}
               sublabel="(middle 20% of simulations)"
               click={this.bracketRequested.bind(this, "none")}
               disabled={false}
