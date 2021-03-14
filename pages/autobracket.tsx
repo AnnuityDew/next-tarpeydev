@@ -39,6 +39,10 @@ class BracketGenerator extends Component<
     bracketFlavor: string
     bracketData: string
     boxScoreData: string
+    vanillaLoading: boolean
+    mildLoading: boolean
+    mediumLoading: boolean
+    maxLoading: boolean
   }
 > {
   constructor(props) {
@@ -50,6 +54,10 @@ class BracketGenerator extends Component<
       bracketFlavor: null,
       bracketData: "",
       boxScoreData: "",
+      vanillaLoading: false,
+      mildLoading: false,
+      mediumLoading: false,
+      maxLoading: false,
     }
   }
 
