@@ -2,10 +2,12 @@ import React from "react"
 import SEO from "./SEO"
 import Header from "./Header"
 
-type PageProps = {
+interface PageProps {
   children: React.ReactNode
   titleTwo?: string
   description?: string
+  url?: string
+  urlImage?: string
   heading?: string
   subheading?: string
 }
@@ -19,11 +21,13 @@ const Page = ({
   children,
   titleTwo = "",
   description = defaultDesc,
+  url = "",
+  urlImage = "",
   heading = "",
   subheading = "",
 }: PageProps) => (
   <React.Fragment>
-    <SEO titleTwo={titleTwo} description={description} />
+    <SEO titleTwo={titleTwo} description={description} url={url} urlImage={urlImage} />
     <Header heading={heading} subheading={subheading} />
     <main>{children}</main>
   </React.Fragment>
