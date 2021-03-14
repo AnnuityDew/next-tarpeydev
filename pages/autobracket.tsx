@@ -62,6 +62,15 @@ class BracketGenerator extends Component<
   }
 
   async bracketRequested(selectedFlavor) {
+    if (selectedFlavor === "none") {
+      this.setState(state => ({ vanillaLoading: true }))
+    } else if (selectedFlavor === "mild") {
+      this.setState(state => ({ mildLoading: true }))
+    } else if (selectedFlavor === "medium") {
+      this.setState(state => ({ mediumLoading: true }))
+    } else if (selectedFlavor === "max") {
+      this.setState(state => ({ maxLoading: true }))
+    };
     await Promise.all([
       fetch(this.props.apiUrl + `/autobracket/bracket/2021/${selectedFlavor}`, {
         method: "GET",
@@ -88,6 +97,10 @@ class BracketGenerator extends Component<
       boxScoreData: "",
       viewBracket: false,
       bracketFlavor: null,
+      vanillaLoading: false,
+      mildLoading: false,
+      mediumLoading: false,
+      maxLoading: false,
     }))
   }
 
@@ -157,7 +170,10 @@ class BracketGenerator extends Component<
       "Midwest Lower": [32, 33, 34, 35, 50, 51, 59],
       "Elite Eight": [60, 61, 62, 63, 64, 65, 66, 67],
     }
-    let bracket, bracketForm, appNotes, bracketReset, boxScore, returnToBracket
+    let bracket, bracketForm, appNotes, bracketReset, boxScore, returnToBracket;
+    const loading = "Loading..."
+    const subloading = "(takes a couple seconds!)"
+    {/* button labels change after click and become disabled. all buttons disable when one is clicked */}
     if (!this.state.viewBracket && !this.state.viewBoxScore) {
       bracketForm = (
         <BracketDiv>
@@ -166,34 +182,34 @@ class BracketGenerator extends Component<
             <StyledButton
               gridButton={true}
               kind="vanilla"
-              label={this.state.vanillaLoading ? "Loading..." : "Vanilla"}
-              sublabel="(middle 20% of simulations)"
+              label={this.state.vanillaLoading ? loading : "Vanilla"}
+              sublabel={this.state.vanillaLoading ? subloading : "(middle 20% of simulations)"}
               click={this.bracketRequested.bind(this, "none")}
-              disabled={false}
+              disabled={this.state.vanillaLoading || this.state.mildLoading || this.state.mediumLoading || this.state.maxLoading}
             />
             <StyledButton
               gridButton={true}
               kind="mild"
-              label="Mild"
-              sublabel="(middle 50% of simulations)"
+              label={this.state.mildLoading ? loading : "Mild"}
+              sublabel={this.state.mildLoading ? subloading : "(middle 50% of simulations)"}
               click={this.bracketRequested.bind(this, "mild")}
-              disabled={false}
+              disabled={this.state.vanillaLoading || this.state.mildLoading || this.state.mediumLoading || this.state.maxLoading}
             />
             <StyledButton
               gridButton={true}
               kind="medium"
-              label="Medium"
-              sublabel="(middle 80% of simulations)"
+              label={this.state.mediumLoading ? loading : "Medium"}
+              sublabel={this.state.mediumLoading ? subloading : "(middle 80% of simulations)"}
               click={this.bracketRequested.bind(this, "medium")}
-              disabled={false}
+              disabled={this.state.vanillaLoading || this.state.mildLoading || this.state.mediumLoading || this.state.maxLoading}
             />
             <StyledButton
               gridButton={true}
               kind="max"
-              label="MAX SPICE"
-              sublabel="(hope you like outliers!)"
+              label={this.state.maxLoading ? loading : "MAX SPICE"}
+              sublabel={this.state.maxLoading ? subloading : "(hope you like outliers!)"}
               click={this.bracketRequested.bind(this, "max")}
-              disabled={false}
+              disabled={this.state.vanillaLoading || this.state.mildLoading || this.state.mediumLoading || this.state.maxLoading}
             />
           </ButtonGrid>
         </BracketDiv>
@@ -237,9 +253,14 @@ class BracketGenerator extends Component<
     } else if (this.state.viewBracket) {
       bracket = (
         <section>
-          <Instructions hot={false}>Your simulated bracket is below! Use this to fill out an empty bracket on any site 
-            you're competing on.</Instructions>
-          <Instructions hot={true}>NEW THIS YEAR: you can click on any game in the bracket to view its simulated box score!</Instructions>
+          <Instructions hot={false}>
+            Your simulated bracket is below! Use this to fill out an empty
+            bracket on any site you're competing on.
+          </Instructions>
+          <Instructions hot={true}>
+            NEW THIS YEAR: you can click on any game in the bracket to view its
+            simulated box score!
+          </Instructions>
           <FirstFour region="First Four">
             <FirstFourGrid>
               {this.state.bracketData &&
@@ -308,7 +329,10 @@ class BracketGenerator extends Component<
           ))}
           {JSON.parse(this.state.boxScoreData).map((data, index) =>
             Object.keys(data["full_box_score"]).map((player, index) => (
-              <PlayerBoxScorecard key={index} playerData={data["full_box_score"][player]} />
+              <PlayerBoxScorecard
+                key={index}
+                playerData={data["full_box_score"][player]}
+              />
             ))
           )}
         </div>
