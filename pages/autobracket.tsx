@@ -161,7 +161,7 @@ class BracketGenerator extends Component<
     if (!this.state.viewBracket && !this.state.viewBoxScore) {
       bracketForm = (
         <BracketDiv>
-          <h4>These buttons don't work yet. Come back on Selection Sunday!</h4>
+          <h4>How spicy would you like your bracket?</h4>
           <ButtonGrid>
             <StyledButton
               gridButton={true}
