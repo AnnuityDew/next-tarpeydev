@@ -97,6 +97,7 @@ class BracketGenerator extends Component<
       bracketData: "",
       boxScoreData: "",
       viewBracket: false,
+      viewBoxScore: false,
       bracketFlavor: null,
       vanillaLoading: false,
       mildLoading: false,
@@ -333,6 +334,8 @@ class BracketGenerator extends Component<
               Object.keys(data["full_box_score"]).map((player, index) => (
                 <PlayerBoxScorecard
                   key={index}
+                  index={index}
+                  team={Object.keys(data["full_box_score"])}
                   playerData={data["full_box_score"][player]}
                 />
               ))

@@ -299,18 +299,23 @@ export const TeamBoxScorecard = styled(UnstyledTeamBoxScorecard)`
   background: ${props => props.theme.uconn.c700};
 `
 
-const UnstyledPlayerBoxScorecard = ({ key, className, playerData }) => {
+const UnstyledPlayerBoxScorecard = ({ key, index, className, team, playerData }) => {
+  var firstQuote = team[index].indexOf("'");
+  var secondQuote = team[index].indexOf("'", (firstQuote + 1));
+  var teamName = team[index].substring(firstQuote + 1, secondQuote);
   return (
     <section className={className}>
+      <h5>Team</h5>
       {/* field names */}
       {Object.keys(playerData).map(stat => (
         <h6 key={stat}>{stat}</h6>
       ))}
       {/* field values */}
+      <h5 className="team-name">{teamName}</h5>
       {Object.keys(playerData).map(stat => (
         
         <h6 key={stat}>
-          {(stat === "Name") ? playerData[stat] : numeral(playerData[stat]).format(0)}
+          {(stat === "Name" || stat === "Position") ? playerData[stat] : numeral(playerData[stat]).format(0)}
         </h6>
       ))}
     </section>
@@ -329,7 +334,7 @@ export const PlayerBoxScorecard = styled(UnstyledPlayerBoxScorecard)`
   grid-gap: 0px;
   grid-auto-flow: column;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 2fr 2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   background: ${props => props.theme.uconn.c700};
 `
 
