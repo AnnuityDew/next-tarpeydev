@@ -15,14 +15,7 @@ export default function Home() {
         expand to include everything that was on the old site.
       </p>
       <p>
-        For now, to view the other apps that haven't moved over here yet, visit{" "}
-        <ExternalLink href="https://timecapsule.tarpey.dev">
-          timecapsule.tarpey.dev
-        </ExternalLink>
-        . (Yes, that means there's a timecapsule INSIDE the timecapsule now...)
-      </p>
-      <p>
-        For less about apps and more about me, visit{" "}
+        For now, here's a link to my personal pages at{" "}
         <ExternalLink href="https://miketarpey.com">
           miketarpey.com
         </ExternalLink>
