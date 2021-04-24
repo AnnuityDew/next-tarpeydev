@@ -1,4 +1,5 @@
 import Page from "../components/Page"
+import { ExternalLink } from "../components/ExternalLink"
 
 export default function Home() {
   return (
@@ -8,10 +9,17 @@ export default function Home() {
       urlImage="https://tarpey.dev/tarpeydevog.png"
       heading="tarpey's apps"
     >
-      <p>Welcome to my app sandbox! Click one of the buttons to continue.</p>
+      <p>Welcome to my app sandbox!</p>
       <p>
-        (If you're wondering where the rest of the site went, click the "about"
-        button!
+        I'm rewriting the site in React with Next.js! This site will slowly
+        expand to include everything that was on the old site.
+      </p>
+      <p>
+        For now, here's a link to my personal pages at{" "}
+        <ExternalLink href="https://miketarpey.com">
+          miketarpey.com
+        </ExternalLink>
+        .
       </p>
     </Page>
   )
