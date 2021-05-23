@@ -22,8 +22,10 @@ import { ExternalLink } from "../components/ExternalLink"
 export async function getStaticProps() {
   // Fetch data from external API
   let api = ""
-  if (process.env.API_ENV === "testing") {
+  if (process.env.API_ENV === "test") {
     api = "http://127.0.0.1:8000"
+  } else if (process.env.API_ENV === "dev") {
+    api = "https://dev.tarpey.dev"
   } else {
     api = "https://api.tarpey.dev"
   }
