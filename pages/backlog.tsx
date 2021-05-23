@@ -72,6 +72,22 @@ class Backlog extends Component<
           click={this.backlogRequested.bind(this, "now_playing=true")}
           disabled={this.state.backlogLoading}
         />
+        <StyledButton
+          gridButton={false}
+          kind="blue"
+          label={this.state.backlogLoading ? loading : "Not Started"}
+          sublabel={this.state.backlogLoading ? subloading : ""}
+          click={this.backlogRequested.bind(this, "game_status=Not%20Started")}
+          disabled={this.state.backlogLoading}
+        />
+        <StyledButton
+          gridButton={false}
+          kind="blue"
+          label={this.state.backlogLoading ? loading : "Started"}
+          sublabel={this.state.backlogLoading ? subloading : ""}
+          click={this.backlogRequested.bind(this, "game_status=Started")}
+          disabled={this.state.backlogLoading}
+        />
       </div>
     )
 
