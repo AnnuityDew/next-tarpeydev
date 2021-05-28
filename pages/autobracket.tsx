@@ -73,7 +73,7 @@ class BracketGenerator extends Component<
       this.setState(state => ({ mediumLoading: true }))
     } else if (selectedFlavor === "max") {
       this.setState(state => ({ maxLoading: true }))
-    };
+    }
     await Promise.all([
       fetch(this.props.apiUrl + `/autobracket/bracket/2021/${selectedFlavor}`, {
         method: "GET",
@@ -174,10 +174,12 @@ class BracketGenerator extends Component<
       "Midwest Lower": [32, 33, 34, 35, 50, 51, 59],
       "Elite Eight": [60, 61, 62, 63, 64, 65, 66, 67],
     }
-    let bracket, bracketForm, appNotes, bracketReset, boxScore, returnToBracket;
+    let bracket, bracketForm, appNotes, bracketReset, boxScore, returnToBracket
     const loading = "Loading..."
     const subloading = "(takes a couple seconds!)"
-    {/* button labels change after click and become disabled. all buttons disable when one is clicked */}
+    {
+      /* button labels change after click and become disabled. all buttons disable when one is clicked */
+    }
     if (!this.state.viewBracket && !this.state.viewBoxScore) {
       bracketForm = (
         <BracketDiv>
@@ -187,33 +189,67 @@ class BracketGenerator extends Component<
               gridButton={true}
               kind="vanilla"
               label={this.state.vanillaLoading ? loading : "Vanilla"}
-              sublabel={this.state.vanillaLoading ? subloading : "(middle 20% of simulations)"}
+              sublabel={
+                this.state.vanillaLoading
+                  ? subloading
+                  : "(middle 20% of simulations)"
+              }
               click={this.bracketRequested.bind(this, "none")}
-              disabled={this.state.vanillaLoading || this.state.mildLoading || this.state.mediumLoading || this.state.maxLoading}
+              disabled={
+                this.state.vanillaLoading ||
+                this.state.mildLoading ||
+                this.state.mediumLoading ||
+                this.state.maxLoading
+              }
             />
             <StyledButton
               gridButton={true}
               kind="mild"
               label={this.state.mildLoading ? loading : "Mild"}
-              sublabel={this.state.mildLoading ? subloading : "(middle 50% of simulations)"}
+              sublabel={
+                this.state.mildLoading
+                  ? subloading
+                  : "(middle 50% of simulations)"
+              }
               click={this.bracketRequested.bind(this, "mild")}
-              disabled={this.state.vanillaLoading || this.state.mildLoading || this.state.mediumLoading || this.state.maxLoading}
+              disabled={
+                this.state.vanillaLoading ||
+                this.state.mildLoading ||
+                this.state.mediumLoading ||
+                this.state.maxLoading
+              }
             />
             <StyledButton
               gridButton={true}
               kind="medium"
               label={this.state.mediumLoading ? loading : "Medium"}
-              sublabel={this.state.mediumLoading ? subloading : "(middle 80% of simulations)"}
+              sublabel={
+                this.state.mediumLoading
+                  ? subloading
+                  : "(middle 80% of simulations)"
+              }
               click={this.bracketRequested.bind(this, "medium")}
-              disabled={this.state.vanillaLoading || this.state.mildLoading || this.state.mediumLoading || this.state.maxLoading}
+              disabled={
+                this.state.vanillaLoading ||
+                this.state.mildLoading ||
+                this.state.mediumLoading ||
+                this.state.maxLoading
+              }
             />
             <StyledButton
               gridButton={true}
               kind="max"
               label={this.state.maxLoading ? loading : "MAX SPICE"}
-              sublabel={this.state.maxLoading ? subloading : "(hope you like outliers!)"}
+              sublabel={
+                this.state.maxLoading ? subloading : "(hope you like outliers!)"
+              }
               click={this.bracketRequested.bind(this, "max")}
-              disabled={this.state.vanillaLoading || this.state.mildLoading || this.state.mediumLoading || this.state.maxLoading}
+              disabled={
+                this.state.vanillaLoading ||
+                this.state.mildLoading ||
+                this.state.mediumLoading ||
+                this.state.maxLoading
+              }
             />
           </ButtonGrid>
         </BracketDiv>

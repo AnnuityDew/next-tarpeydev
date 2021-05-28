@@ -48,13 +48,21 @@ export function BacklogGame({ gameData }: BacklogGameProps) {
     <GameDiv>
       <h4>{gameData.game_title}</h4>
       <h5>{gameData.sub_title}</h5>
-      {gameData.game_system} | {gameData.genre} | {gameData.game_status}<br />
-      Now Playing: {gameData.now_playing.toString()} | DLC: {gameData.dlc.toString()}<br />
-      Playtime: {gameData.game_hours} hours, {gameData.game_minutes} minutes<br />
-      Added {gameData.add_date || ": N/A"}<br />
-      Started {gameData.start_date || ": N/A"}<br />
-      Beaten {gameData.beat_date || ": N/A"}<br />
-      Completed {gameData.complete_date || ": N/A"}<br />
+      {gameData.game_system} | {gameData.genre} | {gameData.game_status}
+      <br />
+      Now Playing: {gameData.now_playing.toString()} | DLC:{" "}
+      {gameData.dlc.toString()}
+      <br />
+      Playtime: {gameData.game_hours} hours, {gameData.game_minutes} minutes
+      <br />
+      Added {gameData.add_date || ": N/A"}
+      <br />
+      Started {gameData.start_date || ": N/A"}
+      <br />
+      Beaten {gameData.beat_date || ": N/A"}
+      <br />
+      Completed {gameData.complete_date || ": N/A"}
+      <br />
       <h6>{gameData.game_notes}</h6>
     </GameDiv>
   )
@@ -75,13 +83,37 @@ export function BacklogGameForm() {
       <StyledBacklogForm>
         <fieldset>
           <label htmlFor="game_title">Game Title</label>
-          <input id="game_title" name="game_title" type="text" autoComplete="game_title" required />
+          <input
+            id="game_title"
+            name="game_title"
+            type="text"
+            autoComplete="game_title"
+            required
+          />
           <label htmlFor="sub_title">Sub Title</label>
-          <input id="sub_title" name="sub_title" type="text" autoComplete="sub_title" required />
+          <input
+            id="sub_title"
+            name="sub_title"
+            type="text"
+            autoComplete="sub_title"
+            required
+          />
           <label htmlFor="game_system">System</label>
-          <input id="game_system" name="game_system" type="text" autoComplete="game_system" required />
+          <input
+            id="game_system"
+            name="game_system"
+            type="text"
+            autoComplete="game_system"
+            required
+          />
           <label htmlFor="genre">Genre</label>
-          <input id="genre" name="genre" type="text" autoComplete="genre" required />
+          <input
+            id="genre"
+            name="genre"
+            type="text"
+            autoComplete="genre"
+            required
+          />
           <label htmlFor="game_status">Status</label>
           <select id="game_status" name="game_status" required>
             <option value="Not Started">Not Started</option>
@@ -103,19 +135,60 @@ export function BacklogGameForm() {
             <option value="false">No</option>
           </select>
           <label htmlFor="game_hours">Hours Played</label>
-          <input id="game_hours" name="game_hours" type="number" autoComplete="game_hours" min="0" required />
+          <input
+            id="game_hours"
+            name="game_hours"
+            type="number"
+            autoComplete="game_hours"
+            min="0"
+            required
+          />
           <label htmlFor="game_minutes">Minutes Played</label>
-          <input id="game_minutes" name="game_minutes" type="number" autoComplete="game_minutes" min="0" max="59" required />
+          <input
+            id="game_minutes"
+            name="game_minutes"
+            type="number"
+            autoComplete="game_minutes"
+            min="0"
+            max="59"
+            required
+          />
           <label htmlFor="add_date">Date Acquired</label>
-          <input id="add_date" name="add_date" type="date" autoComplete="add_date" required />
+          <input
+            id="add_date"
+            name="add_date"
+            type="date"
+            autoComplete="add_date"
+            required
+          />
           <label htmlFor="start_date">Date Started</label>
-          <input id="start_date" name="start_date" type="date" autoComplete="start_date" required />
+          <input
+            id="start_date"
+            name="start_date"
+            type="date"
+            autoComplete="start_date"
+            required
+          />
           <label htmlFor="beat_date">Date Beaten</label>
-          <input id="beat_date" name="beat_date" type="date" autoComplete="beat_date" required />
+          <input
+            id="beat_date"
+            name="beat_date"
+            type="date"
+            autoComplete="beat_date"
+            required
+          />
           <label htmlFor="complete_date">Date Completed</label>
-          <input id="complete_date" name="complete_date" type="date" autoComplete="complete_date" required />
+          <input
+            id="complete_date"
+            name="complete_date"
+            type="date"
+            autoComplete="complete_date"
+            required
+          />
           <label htmlFor="game_notes">Game Notes</label>
-          <textarea id="game_notes" name="game_notes">Test</textarea>
+          <textarea id="game_notes" name="game_notes">
+            Test
+          </textarea>
         </fieldset>
         <button type="submit">Add Game</button>
       </StyledBacklogForm>

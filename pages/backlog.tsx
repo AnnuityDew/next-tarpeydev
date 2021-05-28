@@ -1,9 +1,7 @@
 import Page from "../components/Page"
 import { Component } from "react"
 import { StyledButton } from "../components/Buttons"
-import {
-  BacklogGame
-} from "../components/Backlog"
+import { BacklogGame } from "../components/Backlog"
 
 // This gets called only on build
 export async function getStaticProps() {
@@ -46,18 +44,27 @@ class Backlog extends Component<
   }
 
   async backlogRequested(queryFilter) {
-    this.setState(state => ({ backlogLoading: true }));
+    this.setState(state => ({ backlogLoading: true }))
     await Promise.all([
-      fetch(this.props.apiUrl + `/haveyouseenx/annuitydew/search?${queryFilter}`, { method: "GET", })
-        .then(response => { return response.json() })
-        .then(jsonData => { return JSON.stringify(jsonData) })
-        .then(jsonString => { this.setState({ viewBacklog: true, backlogData: jsonString }) })
-    ]);
-    this.setState(state => ({ backlogLoading: false }));
+      fetch(
+        this.props.apiUrl + `/haveyouseenx/annuitydew/search?${queryFilter}`,
+        { method: "GET" }
+      )
+        .then(response => {
+          return response.json()
+        })
+        .then(jsonData => {
+          return JSON.stringify(jsonData)
+        })
+        .then(jsonString => {
+          this.setState({ viewBacklog: true, backlogData: jsonString })
+        }),
+    ])
+    this.setState(state => ({ backlogLoading: false }))
   }
 
   render() {
-    let backlogFilterForm, backlogResults;
+    let backlogFilterForm, backlogResults
     const loading = "Loading..."
     const subloading = "(takes a couple seconds!)"
 
@@ -94,14 +101,9 @@ class Backlog extends Component<
     backlogResults = (
       <div>
         {this.state.backlogData &&
-          JSON.parse(this.state.backlogData)
-            .map((game, index) => (
-              <BacklogGame
-                key={index + 1}
-                gameData={game}
-              />
-            ))
-        }
+          JSON.parse(this.state.backlogData).map((game, index) => (
+            <BacklogGame key={index + 1} gameData={game} />
+          ))}
       </div>
     )
 

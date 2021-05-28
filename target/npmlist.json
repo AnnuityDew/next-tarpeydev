@@ -1,1 +1,15 @@
-{"version":"latest","name":"next-tarpeydev","dependencies":{"babel-plugin-styled-components":{"version":"1.12.0"},"next-auth":{"version":"3.23.3"},"next":{"version":"10.0.8"},"numeral":{"version":"2.0.6"},"prettier":{"version":"2.2.1"},"react-dom":{"version":"17.0.1"},"react-is":{"version":"17.0.1"},"react":{"version":"17.0.1"},"styled-components":{"version":"5.2.1"}}}
+{
+  "version": "latest",
+  "name": "next-tarpeydev",
+  "dependencies": {
+    "babel-plugin-styled-components": { "version": "1.12.0" },
+    "next-auth": { "version": "3.23.3" },
+    "next": { "version": "10.0.8" },
+    "numeral": { "version": "2.0.6" },
+    "prettier": { "version": "2.2.1" },
+    "react-dom": { "version": "17.0.1" },
+    "react-is": { "version": "17.0.1" },
+    "react": { "version": "17.0.1" },
+    "styled-components": { "version": "5.2.1" }
+  }
+}

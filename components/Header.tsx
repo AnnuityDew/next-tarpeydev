@@ -1,6 +1,7 @@
 import * as React from "react"
 import { InternalLink } from "./InternalLink"
 import styled from "styled-components"
+import { useSession, getSession } from "next-auth/client"
 
 type HeaderProps = {
   heading: string
@@ -8,15 +9,33 @@ type HeaderProps = {
 }
 
 const NavGrid = styled.nav`
-  display: grid;
-  grid: auto-flow / 1fr 1fr;
+  display: flex;
 `
 
-const Header = ({ heading, subheading }: HeaderProps) => (
-  <header>
-    <h1>{heading}</h1>
-    <h3>{subheading}</h3>
-  </header>
-)
+export default function Header({ heading, subheading }: HeaderProps) {
+  const [session, loading] = useSession()
+  let conditionalNav
 
-export default Header
+  if (session) {
+    conditionalNav = (
+      <>
+        <InternalLink href="/api/auth/signout" label="logout" />
+        <InternalLink href="backlog-admin" label="backlog-admin" />
+      </>
+    )
+  } else {
+    conditionalNav = <InternalLink href="/api/auth/signin" label="login" />
+  }
+
+  return (
+    <header>
+      <NavGrid>
+        {conditionalNav}
+        <InternalLink href="/autobracket" label="autobracket" />
+        <InternalLink href="/about" label="about" />
+      </NavGrid>
+      <h1>{heading}</h1>
+      <h3>{subheading}</h3>
+    </header>
+  )
+}

@@ -27,7 +27,12 @@ const Page = ({
   subheading = "",
 }: PageProps) => (
   <React.Fragment>
-    <SEO titleTwo={titleTwo} description={description} url={url} urlImage={urlImage} />
+    <SEO
+      titleTwo={titleTwo}
+      description={description}
+      url={url}
+      urlImage={urlImage}
+    />
     <Header heading={heading} subheading={subheading}></Header>
     <main>{children}</main>
   </React.Fragment>
