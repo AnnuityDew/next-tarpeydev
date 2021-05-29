@@ -54,6 +54,34 @@ export default function BacklogAdmin({ apiUrl }) {
     ])
   }
 
+  async function addGame(game) {
+    console.log(game);
+    var request = new Request(
+      `${apiUrl}/haveyouseenx/annuitydew/game`,
+      {
+          method: 'POST',
+          headers: { "accept": "application/json", "Authorization": `Bearer ${session.access_token}`, "Content-Type": "application/json"},
+          body: JSON.stringify([game])
+      }
+    );
+    fetch(request).then(
+      response => {
+          if (response.status !== 200) {
+              console.log('There was a problem! Code: ' + response.status);
+          }
+          response.text().then(
+              data => {
+                  console.log(data)
+              }
+          );
+      }
+    ).catch(
+        e => {
+            console.log('Fetch error =[', e)
+        }
+    );
+  }
+
   return (
     <Page
       loggedIn={!!session}
@@ -66,14 +94,16 @@ export default function BacklogAdmin({ apiUrl }) {
     >
       <div>
         <h4>Use the buttons below to look through my backlog of games.</h4>
-        {!!session && <StyledButton
-          gridButton={false}
-          kind="medium"
-          label={backlog["loading"] ? loadingText : "Add a game"}
-          sublabel={backlog["loading"] ? subloadingText : ""}
-          click={() => showForm({ visible: true, data: "" })}
-          disabled={backlog["loading"]}
-        />}
+        {!!session && (
+          <StyledButton
+            gridButton={false}
+            kind="medium"
+            label={backlog["loading"] ? loadingText : "Add a game"}
+            sublabel={backlog["loading"] ? subloadingText : ""}
+            click={() => showForm({ visible: true, data: "" })}
+            disabled={backlog["loading"]}
+          />
+        )}
         <StyledButton
           gridButton={false}
           kind="blue"
@@ -99,7 +129,10 @@ export default function BacklogAdmin({ apiUrl }) {
           disabled={backlog["loading"]}
         />
       </div>
-      <div>{form["visible"] ? <BacklogGameForm /> : null}</div>
+      <div>
+        {form["visible"] ? <BacklogGameForm addGame={addGame} /> : null}
+        {console.log(session.access_token)}
+      </div>
       <div>
         {backlog["visible"] &&
           JSON.parse(backlog["data"]).map((game, index) => (

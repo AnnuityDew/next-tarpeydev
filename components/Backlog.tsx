@@ -1,5 +1,6 @@
+import { useState } from "react"
 import styled from "styled-components"
-import { StyledButton } from "./Buttons"
+import { breakpoints, gridBreakpoints } from "../utils/breakpoints"
 
 interface BacklogGameData {
   game_title: string
@@ -24,6 +25,8 @@ interface BacklogGameProps {
 }
 
 export const GameDiv = styled.div`
+  display: flex;
+  justify-content: center;
   background: ${props => props.theme.uconn.c700};
   border-width: 2px;
   border-style: solid;
@@ -32,15 +35,6 @@ export const GameDiv = styled.div`
   text-align: center;
   margin: 20px 0;
   padding: 10px;
-  label {
-    text-align: right;
-    margin-right: 15px;
-    width: 25%;
-  }
-  form {
-    max-width: 1000px;
-  }
-  form label
 `
 
 export function BacklogGame({ gameData }: BacklogGameProps) {
@@ -69,24 +63,104 @@ export function BacklogGame({ gameData }: BacklogGameProps) {
 }
 
 const StyledBacklogForm = styled.form`
+  width: 80%;
+  max-width: 1000px;
   display: flex;
+  flex-direction: column;
+  h4 {
+    margin: 0 0 10px 0;
+  }
+  fieldset {
+    margin: 0 0 20px 0;
+  }
 `
 
-const BacklogBasics = styled.fieldset`
+const BacklogText = styled.fieldset`
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  ${gridBreakpoints("grid-template-columns", [
+    { 0: "max-content auto" },
+    { 800: "1fr 1fr 1fr 1fr" },
+  ])}
+  border: none;
+  grid-gap: 10px;
+  label {
+    ${breakpoints("font-size", "rem", [{ 0: 0.75 }, { 800: 1.25 }])};
+    text-align: right;
+    margin-right: 15px;
+  }
 `
 
-export function BacklogGameForm() {
+const BacklogDropdowns = styled.fieldset`
+  display: grid;
+  ${gridBreakpoints("grid-template-columns", [
+    { 0: "max-content auto" },
+    { 800: "1fr 1fr 1fr 1fr" },
+  ])}
+  border: none;
+  grid-gap: 10px;
+  label {
+    ${breakpoints("font-size", "rem", [{ 0: 0.75 }, { 800: 1.25 }])};
+    text-align: right;
+    margin-right: 15px;
+  }
+`
+
+const BacklogPlaytime = styled.fieldset`
+  display: grid;
+  ${gridBreakpoints("grid-template-columns", [
+    { 0: "auto" },
+    { 800: "1fr 1fr 1fr 1fr" },
+  ])};
+  border: none;
+  grid-gap: 10px;
+  label {
+    ${breakpoints("font-size", "rem", [{ 0: 0.75 }, { 800: 1.25 }])};
+    ${breakpoints("text-align", "", [{ 0: "left" }, { 800: "right" }])};
+  }
+`
+
+export function BacklogGameForm({ addGame }) {
+  const initialFormState = {
+    game_title: "",
+    sub_title: "",
+    game_system: "",
+    genre: "",
+    dlc: "false",
+    game_status: "Not Started",
+    now_playing: "true",
+    game_hours: null,
+    game_minutes: null,
+    actual_playtime: "false",
+    add_date: null,
+    start_date: null,
+    beat_date: null,
+    complete_date: null,
+    game_notes: "",
+  }
+  const [game, setGame] = useState(initialFormState)
+
+  function handleInputChange(event) {
+    const { name, value } = event.target
+    setGame({ ...game, [name]: value })
+  }
+
   return (
     <GameDiv>
-      <StyledBacklogForm>
-        <fieldset>
+      <StyledBacklogForm
+        onSubmit={event => {
+          event.preventDefault()
+          addGame(game)
+        }}
+      >
+        <h4>Basics</h4>
+        <BacklogText>
           <label htmlFor="game_title">Game Title</label>
           <input
             id="game_title"
             name="game_title"
             type="text"
+            value={game.game_title}
+            onChange={handleInputChange}
             autoComplete="game_title"
             required
           />
@@ -95,28 +169,58 @@ export function BacklogGameForm() {
             id="sub_title"
             name="sub_title"
             type="text"
+            value={game.sub_title}
+            onChange={handleInputChange}
             autoComplete="sub_title"
-            required
           />
           <label htmlFor="game_system">System</label>
           <input
             id="game_system"
             name="game_system"
             type="text"
+            value={game.game_system}
+            onChange={handleInputChange}
             autoComplete="game_system"
             required
           />
+
           <label htmlFor="genre">Genre</label>
           <input
             id="genre"
             name="genre"
             type="text"
+            value={game.genre}
+            onChange={handleInputChange}
             autoComplete="genre"
             required
           />
+          <label htmlFor="dlc">DLC</label>
+          <select
+            id="dlc"
+            name="dlc"
+            value={game.dlc}
+            onChange={handleInputChange}
+            required
+          >
+            <option value="true">Yes</option>
+            <option value="false" selected>
+              No
+            </option>
+          </select>
+        </BacklogText>
+        <h4>Current Status</h4>
+        <BacklogDropdowns>
           <label htmlFor="game_status">Status</label>
-          <select id="game_status" name="game_status" required>
-            <option value="Not Started">Not Started</option>
+          <select
+            id="game_status"
+            name="game_status"
+            value={game.game_status}
+            onChange={handleInputChange}
+            required
+          >
+            <option value="Not Started" selected>
+              Not Started
+            </option>
             <option value="Started">Started</option>
             <option value="Beaten">Finished (Any%)</option>
             <option value="Completed">Finished (100%)</option>
@@ -125,71 +229,100 @@ export function BacklogGameForm() {
             <option value="Wish List">Wish List</option>
           </select>
           <label htmlFor="now_playing">Now Playing</label>
-          <select id="now_playing" name="now_playing" required>
-            <option value="true">Yes</option>
+          <select
+            id="now_playing"
+            name="now_playing"
+            value={game.now_playing}
+            onChange={handleInputChange}
+            required
+          >
+            <option value="true" selected>
+              Yes
+            </option>
             <option value="false">No</option>
           </select>
-          <label htmlFor="dlc">DLC</label>
-          <select id="dlc" name="dlc" required>
-            <option value="true">Yes</option>
-            <option value="false">No</option>
-          </select>
-          <label htmlFor="game_hours">Hours Played</label>
-          <input
-            id="game_hours"
-            name="game_hours"
-            type="number"
-            autoComplete="game_hours"
-            min="0"
-            required
-          />
-          <label htmlFor="game_minutes">Minutes Played</label>
-          <input
-            id="game_minutes"
-            name="game_minutes"
-            type="number"
-            autoComplete="game_minutes"
-            min="0"
-            max="59"
-            required
-          />
+        </BacklogDropdowns>
+        <h4>Playtime</h4>
+        <BacklogPlaytime>
           <label htmlFor="add_date">Date Acquired</label>
           <input
             id="add_date"
             name="add_date"
             type="date"
+            value={game.add_date}
+            onChange={handleInputChange}
             autoComplete="add_date"
-            required
           />
           <label htmlFor="start_date">Date Started</label>
           <input
             id="start_date"
             name="start_date"
             type="date"
+            value={game.start_date}
+            onChange={handleInputChange}
             autoComplete="start_date"
-            required
           />
           <label htmlFor="beat_date">Date Beaten</label>
           <input
             id="beat_date"
             name="beat_date"
             type="date"
+            value={game.beat_date}
+            onChange={handleInputChange}
             autoComplete="beat_date"
-            required
           />
           <label htmlFor="complete_date">Date Completed</label>
           <input
             id="complete_date"
             name="complete_date"
             type="date"
+            value={game.complete_date}
+            onChange={handleInputChange}
             autoComplete="complete_date"
-            required
           />
-          <label htmlFor="game_notes">Game Notes</label>
-          <textarea id="game_notes" name="game_notes">
-            Test
-          </textarea>
-        </fieldset>
+          <label htmlFor="game_hours">Hours Played</label>
+          <input
+            id="game_hours"
+            name="game_hours"
+            type="number"
+            value={game.game_hours}
+            onChange={handleInputChange}
+            autoComplete="game_hours"
+            min="0"
+          />
+          <label htmlFor="game_minutes">Minutes Played</label>
+          <input
+            id="game_minutes"
+            name="game_minutes"
+            type="number"
+            value={game.game_minutes}
+            onChange={handleInputChange}
+            autoComplete="game_minutes"
+            min="0"
+            max="59"
+          />
+          <label htmlFor="actual_playtime">Playtime Verified?</label>
+          <select
+            id="actual_playtime"
+            name="actual_playtime"
+            value={game.actual_playtime}
+            onChange={handleInputChange}
+            required
+          >
+            <option value="true">
+              Yes
+            </option>
+            <option value="false" selected>No</option>
+          </select>
+        </BacklogPlaytime>
+        <label htmlFor="game_notes">Game Notes</label>
+        <textarea
+          id="game_notes"
+          name="game_notes"
+          value={game.game_notes}
+          onChange={handleInputChange}
+          defaultValue="Write whatever you want about the game here (usually I add a review or thoughts about the playthrough)."
+        />
         <button type="submit">Add Game</button>
       </StyledBacklogForm>
     </GameDiv>

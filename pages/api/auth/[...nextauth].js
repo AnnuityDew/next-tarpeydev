@@ -37,6 +37,7 @@ export default NextAuth({
           },
         })
         const user = await res.json()
+        console.log(user)
 
         // If no error and we have user data, return it
         if (res.ok && user) {
@@ -47,6 +48,7 @@ export default NextAuth({
       },
     }),
   ],
+  session: { jwt: true },
   callbacks: {
     /**
      * @param  {object}  token     Decrypted JSON Web Token
@@ -56,12 +58,18 @@ export default NextAuth({
      * @param  {boolean} isNewUser True if new user (only available on sign in)
      * @return {object}            JSON Web Token that will be saved
      */
-    async jwt(token, user, account, profile, isNewUser) {
-      return {"token": token, "user": user, "account": account, "profile": profile, "isNewUser": isNewUser}
+    async jwt(token, user) {
+      if (user) {
+        token.access_token = user.access_token
+        token.token_type = user.token_type
+      }
+  
+      return token
     },
+  
     async session(session, token) {
-      session.jwt = token.token.token.user;
-      return session;
+      session.access_token = token.access_token
+      return session
     }
-  }
+  },
 })

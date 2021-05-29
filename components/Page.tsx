@@ -35,7 +35,11 @@ const Page = ({
       url={url}
       urlImage={urlImage}
     />
-    <Header loggedIn={loggedIn} heading={heading} subheading={subheading}></Header>
+    <Header
+      loggedIn={loggedIn}
+      heading={heading}
+      subheading={subheading}
+    ></Header>
     <main>{children}</main>
   </React.Fragment>
 )
