@@ -131,7 +131,6 @@ export default function BacklogAdmin({ apiUrl }) {
       </div>
       <div>
         {form["visible"] ? <BacklogGameForm addGame={addGame} /> : null}
-        {console.log(session.access_token)}
       </div>
       <div>
         {backlog["visible"] &&
