@@ -47,4 +47,21 @@ export default NextAuth({
       },
     }),
   ],
+  callbacks: {
+    /**
+     * @param  {object}  token     Decrypted JSON Web Token
+     * @param  {object}  user      User object      (only available on sign in)
+     * @param  {object}  account   Provider account (only available on sign in)
+     * @param  {object}  profile   Provider profile (only available on sign in)
+     * @param  {boolean} isNewUser True if new user (only available on sign in)
+     * @return {object}            JSON Web Token that will be saved
+     */
+    async jwt(token, user, account, profile, isNewUser) {
+      return {"token": token, "user": user, "account": account, "profile": profile, "isNewUser": isNewUser}
+    },
+    async session(session, token) {
+      session.jwt = token.token.token.user;
+      return session;
+    }
+  }
 })
