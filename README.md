@@ -41,3 +41,4 @@ Mike Tarpey's app playground. Search for a game in the backlog, generate a March
   * https://stackoverflow.com/questions/24502898/show-or-hide-element-in-react
   * https://nextjs.org/blog/forms
   * https://www.taniarascia.com/crud-app-in-react-with-hooks/
+  * https://dev.to/twisha/using-credentials-provider-with-a-custom-backend-in-nextauth-js-43k4
