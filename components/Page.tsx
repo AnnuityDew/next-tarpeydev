@@ -4,7 +4,7 @@ import Header from "./Header"
 
 interface PageProps {
   children: React.ReactNode
-  loggedIn: boolean
+  loggedIn?: boolean
   titleTwo?: string
   description?: string
   url?: string
@@ -20,7 +20,7 @@ const defaultDesc =
 
 const Page = ({
   children,
-  loggedIn,
+  loggedIn = false,
   titleTwo = "",
   description = defaultDesc,
   url = "",
