@@ -306,7 +306,7 @@ export function NewBacklogGameForm({ addGame }) {
   )
 }
 
-export function ExistingBacklogGame({ gameData, updateGame, deleteGame }) {
+export function ExistingBacklogGame({ gameData, loggedIn, updateGame, deleteGame }) {
   const [game, setGame] = useState(gameData)
   const [editing, setEditing] = useState(false)
 
@@ -338,8 +338,8 @@ export function ExistingBacklogGame({ gameData, updateGame, deleteGame }) {
         Completed {game.complete_date || ": N/A"}
         <br />
         <h6>{game.game_notes}</h6>
-        <button onClick={() => setEditing(true)}>Edit game</button>
-        <button onClick={() => deleteGame(game.id)}>Delete game</button>
+        {loggedIn && <button onClick={() => setEditing(true)}>Edit game</button>}
+        {loggedIn && <button onClick={() => deleteGame(game.id)}>Delete game</button>}
       </GameDiv>
     )
   } else {

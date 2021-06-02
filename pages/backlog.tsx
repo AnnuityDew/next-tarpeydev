@@ -38,6 +38,7 @@ export default function BacklogAdmin({ apiUrl }) {
 
   async function backlogRequested(queryFilter) {
     showBacklog(state => ({ ...state, loading: true }))
+    console.log(backlog.data)
     await Promise.all([
       fetch(apiUrl + `/haveyouseenx/annuitydew/search?${queryFilter}`, {
         method: "GET",
@@ -180,6 +181,7 @@ export default function BacklogAdmin({ apiUrl }) {
             <ExistingBacklogGame
               key={index + 1}
               gameData={game}
+              loggedIn={!!session}
               updateGame={updateGame}
               deleteGame={deleteGame}
             />
