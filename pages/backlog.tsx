@@ -3,7 +3,7 @@ import { useState } from "react"
 import Page from "../components/Page"
 import { useSession, getSession } from "next-auth/client"
 import { StyledButton } from "../components/Buttons"
-import { BacklogGame, BacklogGameForm } from "../components/Backlog"
+import { ExistingBacklogGame, NewBacklogGameForm } from "../components/Backlog"
 
 export async function getServerSideProps(context) {
   // Fetch data from external API
@@ -55,31 +55,73 @@ export default function BacklogAdmin({ apiUrl }) {
   }
 
   async function addGame(game) {
-    console.log(game);
-    var request = new Request(
-      `${apiUrl}/haveyouseenx/annuitydew/game`,
-      {
-          method: 'POST',
-          headers: { "accept": "application/json", "Authorization": `Bearer ${session.access_token}`, "Content-Type": "application/json"},
-          body: JSON.stringify([game])
-      }
-    );
-    fetch(request).then(
-      response => {
-          if (response.status !== 200) {
-              console.log('There was a problem! Code: ' + response.status);
-          }
-          response.text().then(
-              data => {
-                  console.log(data)
-              }
-          );
-      }
-    ).catch(
-        e => {
-            console.log('Fetch error =[', e)
+    var request = new Request(`${apiUrl}/haveyouseenx/annuitydew/game`, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${session.access_token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify([game]),
+    })
+    fetch(request)
+      .then(response => {
+        if (response.status !== 200) {
+          console.log("There was a problem! Code: " + response.status)
         }
-    );
+        response.text().then(data => {
+          console.log(data)
+        })
+      })
+      .catch(e => {
+        console.log("Fetch error =[", e)
+      })
+  }
+
+  async function deleteGame(id) {
+    var request = new Request(`${apiUrl}/haveyouseenx/annuitydew/game/${id}`, {
+      method: "DELETE",
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${session.access_token}`,
+      },
+    })
+    fetch(request)
+      .then(response => {
+        if (response.status !== 200) {
+          console.log("There was a problem! Code: " + response.status)
+        }
+        response.text().then(data => {
+          console.log(data)
+        })
+      })
+      .catch(e => {
+        console.log("Fetch error =[", e)
+      })
+  }
+
+  async function updateGame(id, game) {
+    var request = new Request(`${apiUrl}/haveyouseenx/annuitydew/game/${id}`, {
+      method: "PATCH",
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${session.access_token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(game),
+    })
+    fetch(request)
+      .then(response => {
+        if (response.status !== 200) {
+          console.log("There was a problem! Code: " + response.status)
+        }
+        response.text().then(data => {
+          console.log(data)
+        })
+      })
+      .catch(e => {
+        console.log("Fetch error =[", e)
+      })
   }
 
   return (
@@ -130,12 +172,17 @@ export default function BacklogAdmin({ apiUrl }) {
         />
       </div>
       <div>
-        {form["visible"] ? <BacklogGameForm addGame={addGame} /> : null}
+        {form["visible"] ? <NewBacklogGameForm addGame={addGame} /> : null}
       </div>
       <div>
         {backlog["visible"] &&
           JSON.parse(backlog["data"]).map((game, index) => (
-            <BacklogGame key={index + 1} gameData={game} />
+            <ExistingBacklogGame
+              key={index + 1}
+              gameData={game}
+              updateGame={updateGame}
+              deleteGame={deleteGame}
+            />
           ))}
       </div>
     </Page>

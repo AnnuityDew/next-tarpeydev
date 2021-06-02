@@ -63,13 +63,13 @@ export default NextAuth({
         token.access_token = user.access_token
         token.token_type = user.token_type
       }
-  
+
       return token
     },
-  
+
     async session(session, token) {
       session.access_token = token.access_token
       return session
-    }
+    },
   },
 })

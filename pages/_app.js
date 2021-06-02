@@ -1,5 +1,5 @@
 /* special "core" next.js page where we can apply global CSS */
-import { Provider } from 'next-auth/client'
+import { Provider } from "next-auth/client"
 import { createGlobalStyle, ThemeProvider } from "styled-components"
 import "../styles/global.css"
 import Error from "next/error"
@@ -92,13 +92,14 @@ export default function App({ Component, pageProps }) {
           //
           // Note: If a session has expired when keep alive is triggered, all open
           // windows / tabs will be updated to reflect the user is signed out.
-          keepAlive: 0
+          keepAlive: 0,
         }}
-        session={pageProps.session} >
-      <GlobalStyle />
-      <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
-      </ThemeProvider>
+        session={pageProps.session}
+      >
+        <GlobalStyle />
+        <ThemeProvider theme={theme}>
+          <Component {...pageProps} />
+        </ThemeProvider>
       </Provider>
     </>
   )
