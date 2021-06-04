@@ -57,7 +57,7 @@ export default function Header({ loggedIn, heading, subheading }: HeaderProps) {
           {!loggedIn && <InternalLink href="/api/auth/signin" label="login" />}
           {loggedIn && <InternalLink href="/api/auth/signout" label="logout" />}
         </UserNav>
-        <OpenDrawerButton onClick={toggleDrawer}/>
+        <OpenDrawerButton onClick={toggleDrawer} />
       </PageHeaderGrid>
       <AppDrawer isOpen={isOpen} onClick={toggleDrawer} />
     </PageHeader>

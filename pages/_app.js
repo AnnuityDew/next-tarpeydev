@@ -23,7 +23,7 @@ const GlobalStyle = createGlobalStyle`
     border-style: none;
   }
   main {
-    padding: 20px 25px;
+    padding: 25px 0px 0px 20px;
   }
 `
 
@@ -38,6 +38,11 @@ const theme = {
     buttonLightHover: "linear-gradient(180deg, #ff8097, #ffccd5)",
     buttonDark: "linear-gradient(180deg, #99001c, #4d000e)",
     buttonDarkHover: "linear-gradient(180deg, #4d000e, #99001c)",
+  },
+  glass: {
+    black: "rgba(0, 0, 0, 0.65)",
+    blackHover: "rgba(0, 0, 0, 0.55)",
+    blackBorder: "rgba(0, 0, 0, 0.72)",
   },
   colors: {
     vanilla: "#F3E5AB",

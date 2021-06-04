@@ -2,9 +2,12 @@
 import { useState } from "react"
 import Page from "../components/Page"
 import { useSession, getSession } from "next-auth/client"
+import { AppButton } from "../components/AppButtons"
 import { StyledButton } from "../components/Buttons"
 import { ExistingBacklogGame, NewBacklogGameForm } from "../components/Backlog"
-
+import { FilterButton } from "../components/FilterButtons"
+import { FilterDiv } from "../components/FilterDiv"
+import { BacklogDiv } from "../components/BacklogDiv"
 import { BacklogNav } from "../components/BacklogNav"
 
 export async function getServerSideProps(context) {
@@ -29,8 +32,10 @@ export default function BacklogAdmin({ apiUrl }) {
     loading: false,
     data: "",
   })
+  const [search, setSearch] = useState(false)
+  const [visualize, setVisualize] = useState(false)
   const [form, setForm] = useState({ visible: false, data: "" })
-  const [filters, changeFilters] = useState({
+  const [filters, setFilters] = useState({
     dlcFilter: "",
     nowPlayingFilter: "",
     gameStatusFilter: "",
@@ -126,6 +131,88 @@ export default function BacklogAdmin({ apiUrl }) {
       })
   }
 
+  async function onSearch() {
+    setSearch(true)
+    setVisualize(false)
+    setForm({visible: false, data: ""})
+  }
+
+  async function onVisualize() {
+    setVisualize(true)
+    setSearch(false)
+    setForm({visible: false, data: ""})
+  }
+
+  async function onAddGame() {
+    setVisualize(false)
+    setSearch(false)
+    setForm({visible: true, data: ""})
+  }
+
+  const appNavSection = (
+    <BacklogNav>
+      <AppButton onClick={onSearch} label="search" kind="dark" />
+      <AppButton
+        onClick={onVisualize}
+        label="visualize"
+        kind="dark"
+      />
+      {!!session && (
+        <AppButton
+          onClick={onAddGame}
+          label={backlog["loading"] ? loadingText : "Add a game"}
+          kind="light"
+        />
+      )}
+    </BacklogNav>
+  )
+
+  const searchSection = (
+    <section>
+      <h2>search</h2>
+      <FilterDiv>
+        <FilterButton
+          kind="dark"
+          label={backlog["loading"] ? loadingText : "Now Playing"}
+          onClick={() => backlogRequested("now_playing=true")}
+          disabled={backlog["loading"]}
+        />
+        <FilterButton
+          kind="dark"
+          label={backlog["loading"] ? loadingText : "Not Started"}
+          onClick={() => backlogRequested("game_status=Not%20Started")}
+          disabled={backlog["loading"]}
+        />
+        <FilterButton
+          kind="dark"
+          label={backlog["loading"] ? loadingText : "Started"}
+          onClick={() => backlogRequested("game_status=Started")}
+          disabled={backlog["loading"]}
+        />
+      </FilterDiv>
+      <BacklogDiv>
+        {backlog["visible"] &&
+          JSON.parse(backlog["data"]).map((game, index) => (
+            <ExistingBacklogGame
+              key={index + 1}
+              gameData={game}
+              loggedIn={!!session}
+              updateGame={updateGame}
+              deleteGame={deleteGame}
+            />
+          ))}
+      </BacklogDiv>
+    </section>
+  )
+
+  const visualizeSection = <section>placeholder text</section>
+
+  const newGameSection = (
+    <section>
+      <NewBacklogGameForm addGame={addGame} setForm={setForm} />
+    </section>
+  )
+
   return (
     <Page
       loggedIn={!!session}
@@ -138,57 +225,12 @@ export default function BacklogAdmin({ apiUrl }) {
     >
       <div>
         <p>Use the buttons below to look through my backlog of games.</p>
-        <BacklogNav />
-        {!!session && (
-          <StyledButton
-            gridButton={false}
-            kind="medium"
-            label={backlog["loading"] ? loadingText : "Add a game"}
-            sublabel={backlog["loading"] ? subloadingText : ""}
-            click={() => setForm({ visible: true, data: "" })}
-            disabled={backlog["loading"]}
-          />
-        )}
-        <StyledButton
-          gridButton={false}
-          kind="blue"
-          label={backlog["loading"] ? loadingText : "Now Playing"}
-          sublabel={backlog["loading"] ? subloadingText : ""}
-          click={() => backlogRequested("now_playing=true")}
-          disabled={backlog["loading"]}
-        />
-        <StyledButton
-          gridButton={false}
-          kind="blue"
-          label={backlog["loading"] ? loadingText : "Not Started"}
-          sublabel={backlog["loading"] ? subloadingText : ""}
-          click={() => backlogRequested("game_status=Not%20Started")}
-          disabled={backlog["loading"]}
-        />
-        <StyledButton
-          gridButton={false}
-          kind="blue"
-          label={backlog["loading"] ? loadingText : "Started"}
-          sublabel={backlog["loading"] ? subloadingText : ""}
-          click={() => backlogRequested("game_status=Started")}
-          disabled={backlog["loading"]}
-        />
+        {appNavSection}
+        {search && searchSection}
+        {visualize && visualizeSection}
+        {form["visible"] && newGameSection}
       </div>
-      <div>
-        {form["visible"] ? <NewBacklogGameForm addGame={addGame} setForm={setForm} /> : null}
-      </div>
-      <div>
-        {backlog["visible"] &&
-          JSON.parse(backlog["data"]).map((game, index) => (
-            <ExistingBacklogGame
-              key={index + 1}
-              gameData={game}
-              loggedIn={!!session}
-              updateGame={updateGame}
-              deleteGame={deleteGame}
-            />
-          ))}
-      </div>
+      <div></div>
     </Page>
   )
 }

@@ -23,18 +23,18 @@ const StyledCloseDrawerButton = styled.div`
   font-weight: 700;
 `
 
-export function OpenDrawerButton ({ onClick }) {
+export function OpenDrawerButton({ onClick }) {
   return (
     <StyledOpenDrawerButton onClick={onClick}>
       {"app drawer >"}
     </StyledOpenDrawerButton>
   )
-};
+}
 
-export function CloseDrawerButton ({ onClick }) {
+export function CloseDrawerButton({ onClick }) {
   return (
     <StyledCloseDrawerButton onClick={onClick}>
       {"< close drawer"}
     </StyledCloseDrawerButton>
   )
-};
+}

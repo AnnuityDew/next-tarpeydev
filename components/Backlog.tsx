@@ -29,14 +29,19 @@ export const GameDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: ${props => props.theme.uconn.c700};
-  border-width: 2px;
-  border-style: solid;
-  border-color: white;
+  margin: 0px 15px 15px 0px;
+  padding: 15px;
+  color: white;
+  background: ${props => props.theme.glass.black};
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 10px;
-  text-align: center;
-  margin: 20px 0;
-  padding: 10px;
+  border: 0px solid ${props => props.theme.glass.blackBorder};
+  transition: 0.3s;
+  &:hover {
+    background: ${props => props.theme.glass.blackHover};
+  }
 `
 
 const StyledBacklogForm = styled.form`
@@ -302,12 +307,19 @@ export function NewBacklogGameForm({ addGame, setForm }) {
         />
         <button type="submit">Add Game</button>
       </StyledBacklogForm>
-      <button onClick={() => setForm({visible: false, data: ""})}>Cancel Adding</button>
+      <button onClick={() => setForm({ visible: false, data: "" })}>
+        Cancel Adding
+      </button>
     </GameDiv>
   )
 }
 
-export function ExistingBacklogGame({ gameData, loggedIn, updateGame, deleteGame }) {
+export function ExistingBacklogGame({
+  gameData,
+  loggedIn,
+  updateGame,
+  deleteGame,
+}) {
   const [game, setGame] = useState(gameData)
   const [editing, setEditing] = useState(false)
 
@@ -325,8 +337,7 @@ export function ExistingBacklogGame({ gameData, loggedIn, updateGame, deleteGame
         <h5>{game.sub_title}</h5>
         {game.game_system} | {game.genre} | {game.game_status}
         <br />
-        Now Playing: {game.now_playing.toString()} | DLC:{" "}
-        {game.dlc.toString()}
+        Now Playing: {game.now_playing.toString()} | DLC: {game.dlc.toString()}
         <br />
         Playtime: {game.game_hours} hours, {game.game_minutes} minutes
         <br />
@@ -339,8 +350,12 @@ export function ExistingBacklogGame({ gameData, loggedIn, updateGame, deleteGame
         Completed {game.complete_date || ": N/A"}
         <br />
         <h6>{game.game_notes}</h6>
-        {loggedIn && <button onClick={() => setEditing(true)}>Edit game</button>}
-        {loggedIn && <button onClick={() => deleteGame(game.id)}>Delete game</button>}
+        {loggedIn && (
+          <button onClick={() => setEditing(true)}>Edit game</button>
+        )}
+        {loggedIn && (
+          <button onClick={() => deleteGame(game.id)}>Delete game</button>
+        )}
       </GameDiv>
     )
   } else {

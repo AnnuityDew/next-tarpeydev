@@ -17,12 +17,12 @@ const AppDrawerNav = styled.nav`
   width: 300px;
   max-width: 50vw;
   z-index: 200;
-  box-shadow: 1px 0px 7px rgba(0,0,0,0.5); 
+  box-shadow: 1px 0px 7px rgba(0, 0, 0, 0.5);
   transition: transform 0.3s ease-out;
-  transform: ${props => props.isOpen ? "translateX(0)" : "translateX(100%)"}
+  transform: ${props => (props.isOpen ? "translateX(0)" : "translateX(100%)")};
 `
 
-export function AppDrawer ({ isOpen, onClick }) {
+export function AppDrawer({ isOpen, onClick }) {
   return (
     <AppDrawerNav isOpen={isOpen}>
       <CloseDrawerButton onClick={onClick} />
@@ -31,4 +31,4 @@ export function AppDrawer ({ isOpen, onClick }) {
       <InternalLink href="/about" label="about" />
     </AppDrawerNav>
   )
-};
+}

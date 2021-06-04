@@ -5,6 +5,7 @@ interface ButtonProps {
   onClick: React.ReactEventHandler
   label: string
   kind: string
+  disabled?: boolean
 }
 
 export const StyledButton = styled.button`
@@ -35,9 +36,9 @@ export const StyledButton = styled.button`
   }}
 `
 
-export const AppButton = ({ onClick, label, kind }: ButtonProps) => (
+export const FilterButton = ({ onClick, label, kind, disabled }: ButtonProps) => (
   /* outer div allows us to pad and align */
-  <StyledButton onClick={onClick} kind={kind} >
+  <StyledButton onClick={onClick} kind={kind} disabled={disabled}>
     {label}
   </StyledButton>
 )
