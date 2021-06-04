@@ -1,6 +1,7 @@
 /* see https://nextjs.org/docs/api-reference/next/link */
 import Link from "next/link"
 import styled from "styled-components"
+import { breakpoints } from "../utils/breakpoints"
 
 type InternalLinkProps = {
   href: string
@@ -9,23 +10,12 @@ type InternalLinkProps = {
 
 const HeaderLink = styled.a`
   color: #ffffff;
+  ${breakpoints("padding", "", [
+    { 0: "10px 25px 5px 25px" },
+    { 900: "20px 25px" },
+  ])}
   text-decoration: none;
-  margin: 3px;
-  padding: 8px;
-  border-style: solid;
-  border-width: 1px;
-  border-color: #ffffff;
-  border-radius: 10px;
-  &:link {
-    ${props => {
-      return `background: ${props.theme.uconn.c600}`
-    }}
-  }
-  &:hover {
-    ${props => {
-      return `background: ${props.theme.uconn.c800}`
-    }}
-  }
+  font-weight: 700;
 `
 
 export function InternalLink({ href, label }: InternalLinkProps) {

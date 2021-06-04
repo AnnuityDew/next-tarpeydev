@@ -12,17 +12,20 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   };
   html {
-    font-family: "Lato", sans-serif;
+    font-size: 1rem;
+    font-family: "Poppins", "Lato", sans-serif;
     -webkit-text-size-adjust: 100%;
-    background-color: #000925;
-    margin: 0 20px;
+    background: conic-gradient(from 225deg at 100px -100px, #dec8ff,#ffbcc8,#ffe784,#ffc4cf,#dbc3ff);
+    color: black;
+    overflow-y: scroll;
+    min-height: 100%;
   }
   img {
     border-style: none;
   }
   header, main {
     font-family: "Poppins", sans-serif;
-    color: #FFFFFF;
+    color: #000000;
     ${breakpoints("font-size", "rem", [
       { 0: 1 },
       { 600: 1.2 },
@@ -34,6 +37,13 @@ const GlobalStyle = createGlobalStyle`
 `
 
 const theme = {
+  gradients: {
+    main:
+      "conic-gradient(from 225deg at 100px -100px, " +
+      "#dec8ff,#ffbcc8,#ffe784,#ffc4cf,#dbc3ff)",
+    highlight:
+      "conic-gradient(at 0% 100%, #b78cf7, #ff7c94, #ffcf0d, #ff7c94, #b78cf7)",
+  },
   colors: {
     vanilla: "#F3E5AB",
     mild: "#76FF4D",

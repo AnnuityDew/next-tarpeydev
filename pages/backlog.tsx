@@ -37,8 +37,7 @@ export default function BacklogAdmin({ apiUrl }) {
   const subloadingText = "(takes a couple seconds!)"
 
   async function backlogRequested(queryFilter) {
-    showBacklog(state => ({ ...state, loading: true }))
-    console.log(backlog.data)
+    showBacklog({ visible: false, loading: true, data: "" })
     await Promise.all([
       fetch(apiUrl + `/haveyouseenx/annuitydew/search?${queryFilter}`, {
         method: "GET",
