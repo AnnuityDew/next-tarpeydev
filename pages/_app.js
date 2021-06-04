@@ -3,7 +3,6 @@ import { Provider } from "next-auth/client"
 import { createGlobalStyle, ThemeProvider } from "styled-components"
 import "../styles/global.css"
 import Error from "next/error"
-import { breakpoints } from "../utils/breakpoints"
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -23,16 +22,8 @@ const GlobalStyle = createGlobalStyle`
   img {
     border-style: none;
   }
-  header, main {
-    font-family: "Poppins", sans-serif;
-    color: #000000;
-    ${breakpoints("font-size", "rem", [
-      { 0: 1 },
-      { 600: 1.2 },
-      { 900: 1.4 },
-      { 1200: 1.6 },
-      { 1600: 1.6 },
-    ])};
+  main {
+    padding: 20px 25px;
   }
 `
 
@@ -43,6 +34,10 @@ const theme = {
       "#dec8ff,#ffbcc8,#ffe784,#ffc4cf,#dbc3ff)",
     highlight:
       "conic-gradient(at 0% 100%, #b78cf7, #ff7c94, #ffcf0d, #ff7c94, #b78cf7)",
+    buttonLight: "linear-gradient(180deg, #ffccd5, #ff8097)",
+    buttonLightHover: "linear-gradient(180deg, #ff8097, #ffccd5)",
+    buttonDark: "linear-gradient(180deg, #99001c, #4d000e)",
+    buttonDarkHover: "linear-gradient(180deg, #4d000e, #99001c)",
   },
   colors: {
     vanilla: "#F3E5AB",

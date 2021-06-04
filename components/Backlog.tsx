@@ -96,7 +96,7 @@ const BacklogPlaytime = styled.fieldset`
   }
 `
 
-export function NewBacklogGameForm({ addGame }) {
+export function NewBacklogGameForm({ addGame, setForm }) {
   const initialFormState = {
     game_title: "",
     sub_title: "",
@@ -302,6 +302,7 @@ export function NewBacklogGameForm({ addGame }) {
         />
         <button type="submit">Add Game</button>
       </StyledBacklogForm>
+      <button onClick={() => setForm({visible: false, data: ""})}>Cancel Adding</button>
     </GameDiv>
   )
 }

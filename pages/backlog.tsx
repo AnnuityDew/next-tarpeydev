@@ -5,6 +5,8 @@ import { useSession, getSession } from "next-auth/client"
 import { StyledButton } from "../components/Buttons"
 import { ExistingBacklogGame, NewBacklogGameForm } from "../components/Backlog"
 
+import { BacklogNav } from "../components/BacklogNav"
+
 export async function getServerSideProps(context) {
   // Fetch data from external API
   let api = ""
@@ -22,12 +24,12 @@ export async function getServerSideProps(context) {
 
 export default function BacklogAdmin({ apiUrl }) {
   const [session, loading] = useSession()
-  const [backlog, showBacklog] = useState({
+  const [backlog, setBacklog] = useState({
     visible: false,
     loading: false,
     data: "",
   })
-  const [form, showForm] = useState({ visible: false, data: "" })
+  const [form, setForm] = useState({ visible: false, data: "" })
   const [filters, changeFilters] = useState({
     dlcFilter: "",
     nowPlayingFilter: "",
@@ -37,7 +39,7 @@ export default function BacklogAdmin({ apiUrl }) {
   const subloadingText = "(takes a couple seconds!)"
 
   async function backlogRequested(queryFilter) {
-    showBacklog({ visible: false, loading: true, data: "" })
+    setBacklog({ visible: false, loading: true, data: "" })
     await Promise.all([
       fetch(apiUrl + `/haveyouseenx/annuitydew/search?${queryFilter}`, {
         method: "GET",
@@ -49,7 +51,7 @@ export default function BacklogAdmin({ apiUrl }) {
           return JSON.stringify(jsonData)
         })
         .then(jsonString => {
-          showBacklog({ visible: true, loading: false, data: jsonString })
+          setBacklog({ visible: true, loading: false, data: jsonString })
         }),
     ])
   }
@@ -135,14 +137,15 @@ export default function BacklogAdmin({ apiUrl }) {
       subheading=""
     >
       <div>
-        <h4>Use the buttons below to look through my backlog of games.</h4>
+        <p>Use the buttons below to look through my backlog of games.</p>
+        <BacklogNav />
         {!!session && (
           <StyledButton
             gridButton={false}
             kind="medium"
             label={backlog["loading"] ? loadingText : "Add a game"}
             sublabel={backlog["loading"] ? subloadingText : ""}
-            click={() => showForm({ visible: true, data: "" })}
+            click={() => setForm({ visible: true, data: "" })}
             disabled={backlog["loading"]}
           />
         )}
@@ -172,7 +175,7 @@ export default function BacklogAdmin({ apiUrl }) {
         />
       </div>
       <div>
-        {form["visible"] ? <NewBacklogGameForm addGame={addGame} /> : null}
+        {form["visible"] ? <NewBacklogGameForm addGame={addGame} setForm={setForm} /> : null}
       </div>
       <div>
         {backlog["visible"] &&

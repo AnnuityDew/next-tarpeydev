@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { InternalLink } from "./InternalLink"
 import styled from "styled-components"
-import { breakpoints } from "../utils/breakpoints"
-import { DrawerButton } from "./DrawerButton"
+import { breakpoints, gridBreakpoints } from "../utils/breakpoints"
+import { OpenDrawerButton } from "./DrawerButton"
 import { AppDrawer } from "./AppDrawer"
 
 type HeaderProps = {
@@ -18,7 +18,12 @@ const PageHeader = styled.header`
 const PageHeaderGrid = styled.div`
   display: grid;
   background-color: #000000;
-  grid-template-columns: max-content max-content 1fr;
+  ${gridBreakpoints("grid-template-columns", [
+    { 0: "1fr" },
+    { 450: "1fr max-content max-content" },
+  ])}
+  grid-template-columns: 1fr max-content max-content;
+  align-items: center;
 `
 
 const GradientTitle = styled.h1`
@@ -30,7 +35,7 @@ const GradientTitle = styled.h1`
     { 0: "10px 25px 5px 25px" },
     { 900: "20px 25px" },
   ])}
-  ${breakpoints("justify-self", "", [{ 0: "center" }, { 900: "left" }])}
+  ${breakpoints("justify-self", "", [{ 0: "center" }, { 450: "left" }])}
 `
 
 const UserNav = styled.nav`
@@ -52,9 +57,9 @@ export default function Header({ loggedIn, heading, subheading }: HeaderProps) {
           {!loggedIn && <InternalLink href="/api/auth/signin" label="login" />}
           {loggedIn && <InternalLink href="/api/auth/signout" label="logout" />}
         </UserNav>
-        <DrawerButton isOpen={isOpen} onClick={toggleDrawer}/>
+        <OpenDrawerButton onClick={toggleDrawer}/>
       </PageHeaderGrid>
-      <AppDrawer isOpen={isOpen} />
+      <AppDrawer isOpen={isOpen} onClick={toggleDrawer} />
     </PageHeader>
   )
 }
