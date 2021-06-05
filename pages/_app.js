@@ -34,10 +34,9 @@ const theme = {
       "#dec8ff,#ffbcc8,#ffe784,#ffc4cf,#dbc3ff)",
     highlight:
       "conic-gradient(at 0% 100%, #b78cf7, #ff7c94, #ffcf0d, #ff7c94, #b78cf7)",
-    buttonLight: "linear-gradient(180deg, #ffccd5, #ff8097)",
-    buttonLightHover: "linear-gradient(180deg, #ff8097, #ffccd5)",
-    buttonDark: "linear-gradient(180deg, #99001c, #4d000e)",
-    buttonDarkHover: "linear-gradient(180deg, #4d000e, #99001c)",
+    buttonLightRed: "linear-gradient(180deg, #ffccd5, #ff8097)",
+    buttonDarkRed: "linear-gradient(180deg, #99001c, #4d000e)",
+    buttonBlue: "#0d6fc3",
   },
   glass: {
     black: "rgba(0, 0, 0, 0.65)",

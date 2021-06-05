@@ -7,9 +7,8 @@ interface ButtonProps {
   kind: string
 }
 
-export const StyledButton = styled.button`
+const StyledButton = styled.button`
   border-radius: 10px;
-  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.7);
   place-items: center;
   cursor: pointer;
   font-size: 1em;
@@ -17,19 +16,20 @@ export const StyledButton = styled.button`
   font-family: Poppins, sans-serif;
   padding: 0.5rem 0.5rem;
   margin: 0 15px 0 0;
-  transition: 0.3s;
   ${props => {
-    if (props.kind === "dark") {
+    if (props.kind === "darkPressed") {
       return `
         color: white;
-        background: ${props.theme.gradients.buttonDark};
+        background: ${props.theme.gradients.buttonBlue};
         border: 0px solid white;
+        box-shadow: inset -2px 2px 4px rgba(0, 0, 0, 0.7);
       `
-    } else {
+    } else if (props.kind === "dark") {
       return `
-        color: black;
-        background: ${props.theme.gradients.buttonLight};
-        border: 0px solid black;
+        color: white;
+        background: ${props.theme.gradients.buttonDarkRed};
+        border: 0px solid white;
+        box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.7);
       `
     }
   }}

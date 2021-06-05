@@ -9,6 +9,7 @@ import { FilterButton } from "../components/FilterButtons"
 import { FilterDiv } from "../components/FilterDiv"
 import { BacklogDiv } from "../components/BacklogDiv"
 import { BacklogNav } from "../components/BacklogNav"
+import { TimelineChart } from "../components/BacklogCharts"
 
 export async function getServerSideProps(context) {
   // Fetch data from external API
@@ -28,6 +29,11 @@ export async function getServerSideProps(context) {
 export default function BacklogAdmin({ apiUrl }) {
   const [session, loading] = useSession()
   const [backlog, setBacklog] = useState({
+    visible: false,
+    loading: false,
+    data: "",
+  })
+  const [visual, setVisual] = useState({
     visible: false,
     loading: false,
     data: "",
@@ -57,6 +63,24 @@ export default function BacklogAdmin({ apiUrl }) {
         })
         .then(jsonString => {
           setBacklog({ visible: true, loading: false, data: jsonString })
+        }),
+    ])
+  }
+
+  async function visualRequested(chartType) {
+    setVisual({ visible: false, loading: true, data: "" })
+    await Promise.all([
+      fetch(apiUrl + `/haveyouseenx/annuitydew/charts/${chartType}`, {
+        method: "GET",
+      })
+        .then(response => {
+          return response.json()
+        })
+        .then(jsonData => {
+          return JSON.stringify(jsonData)
+        })
+        .then(jsonString => {
+          setVisual({ visible: true, loading: false, data: jsonString })
         }),
     ])
   }
@@ -151,17 +175,17 @@ export default function BacklogAdmin({ apiUrl }) {
 
   const appNavSection = (
     <BacklogNav>
-      <AppButton onClick={onSearch} label="search" kind="dark" />
+      <AppButton onClick={onSearch} label="search" kind={search ? "darkPressed" : "dark"} />
       <AppButton
         onClick={onVisualize}
         label="visualize"
-        kind="dark"
+        kind={visualize ? "darkPressed" : "dark"}
       />
       {!!session && (
         <AppButton
           onClick={onAddGame}
           label={backlog["loading"] ? loadingText : "Add a game"}
-          kind="light"
+          kind={form["visible"] ? "darkPressed" : "dark"}
         />
       )}
     </BacklogNav>
@@ -205,7 +229,32 @@ export default function BacklogAdmin({ apiUrl }) {
     </section>
   )
 
-  const visualizeSection = <section>placeholder text</section>
+  const visualizeSection = <section>
+    <h2>visualize</h2>
+    <FilterDiv>
+      <FilterButton
+        kind="dark"
+        label={backlog["loading"] ? loadingText : "treemap"}
+        onClick={() => visualRequested("treemap")}
+        disabled={backlog["loading"]}
+      />
+      <FilterButton
+        kind="dark"
+        label={backlog["loading"] ? loadingText : "bubbles"}
+        onClick={() => visualRequested("bubbles")}
+        disabled={backlog["loading"]}
+      />
+      <FilterButton
+        kind="dark"
+        label={backlog["loading"] ? loadingText : "timeline"}
+        onClick={() => visualRequested("timeline")}
+        disabled={backlog["loading"]}
+      />
+    </FilterDiv>
+    <div>
+      {visual["visible"] && visual["data"]}
+    </div>
+  </section>
 
   const newGameSection = (
     <section>
@@ -230,7 +279,6 @@ export default function BacklogAdmin({ apiUrl }) {
         {visualize && visualizeSection}
         {form["visible"] && newGameSection}
       </div>
-      <div></div>
     </Page>
   )
 }
