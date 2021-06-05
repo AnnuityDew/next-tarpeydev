@@ -158,24 +158,28 @@ export default function BacklogAdmin({ apiUrl }) {
   async function onSearch() {
     setSearch(true)
     setVisualize(false)
-    setForm({visible: false, data: ""})
+    setForm({ visible: false, data: "" })
   }
 
   async function onVisualize() {
     setVisualize(true)
     setSearch(false)
-    setForm({visible: false, data: ""})
+    setForm({ visible: false, data: "" })
   }
 
   async function onAddGame() {
     setVisualize(false)
     setSearch(false)
-    setForm({visible: true, data: ""})
+    setForm({ visible: true, data: "" })
   }
 
   const appNavSection = (
     <BacklogNav>
-      <AppButton onClick={onSearch} label="search" kind={search ? "darkPressed" : "dark"} />
+      <AppButton
+        onClick={onSearch}
+        label="search"
+        kind={search ? "darkPressed" : "dark"}
+      />
       <AppButton
         onClick={onVisualize}
         label="visualize"
@@ -229,32 +233,32 @@ export default function BacklogAdmin({ apiUrl }) {
     </section>
   )
 
-  const visualizeSection = <section>
-    <h2>visualize</h2>
-    <FilterDiv>
-      <FilterButton
-        kind="dark"
-        label={backlog["loading"] ? loadingText : "treemap"}
-        onClick={() => visualRequested("treemap")}
-        disabled={backlog["loading"]}
-      />
-      <FilterButton
-        kind="dark"
-        label={backlog["loading"] ? loadingText : "bubbles"}
-        onClick={() => visualRequested("bubbles")}
-        disabled={backlog["loading"]}
-      />
-      <FilterButton
-        kind="dark"
-        label={backlog["loading"] ? loadingText : "timeline"}
-        onClick={() => visualRequested("timeline")}
-        disabled={backlog["loading"]}
-      />
-    </FilterDiv>
-    <div>
-      {visual["visible"] && visual["data"]}
-    </div>
-  </section>
+  const visualizeSection = (
+    <section>
+      <h2>visualize</h2>
+      <FilterDiv>
+        <FilterButton
+          kind="dark"
+          label={backlog["loading"] ? loadingText : "treemap"}
+          onClick={() => visualRequested("treemap")}
+          disabled={backlog["loading"]}
+        />
+        <FilterButton
+          kind="dark"
+          label={backlog["loading"] ? loadingText : "bubbles"}
+          onClick={() => visualRequested("bubbles")}
+          disabled={backlog["loading"]}
+        />
+        <FilterButton
+          kind="dark"
+          label={backlog["loading"] ? loadingText : "timeline"}
+          onClick={() => visualRequested("timeline")}
+          disabled={backlog["loading"]}
+        />
+      </FilterDiv>
+      <div>{visual["visible"] && visual["data"]}</div>
+    </section>
+  )
 
   const newGameSection = (
     <section>

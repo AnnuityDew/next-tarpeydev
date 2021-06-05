@@ -33,11 +33,11 @@ export const GameDiv = styled.div`
   padding: 15px;
   color: white;
   background: ${props => props.theme.glass.black};
-  box-shadow: -3px 3px 15px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: ${props => props.theme.glass.shadow};
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 10px;
-  border: 0px solid ${props => props.theme.glass.blackBorder};
+  border: ${props => props.theme.glass.blackBorder};
   transition: 0.3s;
   &:hover {
     background: ${props => props.theme.glass.blackHover};

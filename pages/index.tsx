@@ -1,5 +1,7 @@
 import Page from "../components/Page"
-import { ExternalLink } from "../components/ExternalLink"
+import { IndexAppCard } from "../components/IndexAppCards"
+import { IndexAppGrid } from "../components/IndexAppGrid"
+import { LinkedAppButton } from "../components/AppButtons"
 import { useSession, getSession } from "next-auth/client"
 
 export async function getServerSideProps(context) {
@@ -28,18 +30,21 @@ export default function Home() {
       urlImage="https://tarpey.dev/tarpeydevog.png"
       heading="tarpey's apps"
     >
-      <p>Welcome to my app sandbox!</p>
-      <p>
-        I'm rewriting the site in React with Next.js! This site will slowly
-        expand to include everything that was on the old site.
-      </p>
-      <p>
-        For now, here's a link to my personal pages at{" "}
-        <ExternalLink href="https://miketarpey.com">
-          miketarpey.com
-        </ExternalLink>
-        .
-      </p>
+      <IndexAppGrid>
+        <IndexAppCard
+          internal={true}
+          label="about"
+          imagesrc="/images/raw/mike-tarpey-at-pax.jpg"
+          imagealt="Mike Tarpey on his way to PAX East 2020 in Boston, Massachusetts."
+        >
+          <p>Career and project history.</p>
+          <LinkedAppButton
+            label="full resume + projects"
+            url="/about"
+            kind="light"
+          />
+        </IndexAppCard>
+      </IndexAppGrid>
     </Page>
   )
 }

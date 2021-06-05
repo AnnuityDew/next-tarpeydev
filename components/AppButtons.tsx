@@ -1,4 +1,5 @@
 import React from "react"
+import Link from "next/link"
 import styled from "styled-components"
 
 interface ButtonProps {
@@ -37,7 +38,18 @@ const StyledButton = styled.button`
 
 export const AppButton = ({ onClick, label, kind }: ButtonProps) => (
   /* outer div allows us to pad and align */
-  <StyledButton onClick={onClick} kind={kind} >
+  <StyledButton onClick={onClick} kind={kind}>
     {label}
   </StyledButton>
+)
+
+export const LinkedAppButton = ({ label, url, kind }) => (
+  /* outer div allows us to pad and align */
+  <div>
+    <Link href={url} passHref>
+      <StyledButton kind={kind}>
+        {label}
+      </StyledButton>
+    </Link>
+  </div>
 )

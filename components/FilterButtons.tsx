@@ -36,7 +36,12 @@ const StyledButton = styled.button`
   }}
 `
 
-export const FilterButton = ({ onClick, label, kind, disabled }: ButtonProps) => (
+export const FilterButton = ({
+  onClick,
+  label,
+  kind,
+  disabled,
+}: ButtonProps) => (
   /* outer div allows us to pad and align */
   <StyledButton onClick={onClick} kind={kind} disabled={disabled}>
     {label}
