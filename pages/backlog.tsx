@@ -3,13 +3,11 @@ import { useState } from "react"
 import Page from "../components/Page"
 import { useSession, getSession } from "next-auth/client"
 import { AppButton } from "../components/AppButtons"
-import { StyledButton } from "../components/Buttons"
 import { ExistingBacklogGame, NewBacklogGameForm } from "../components/Backlog"
 import { FilterButton } from "../components/FilterButtons"
 import { FilterDiv } from "../components/FilterDiv"
 import { BacklogDiv } from "../components/BacklogDiv"
 import { BacklogNav } from "../components/BacklogNav"
-import { TimelineChart } from "../components/BacklogCharts"
 
 export async function getServerSideProps(context) {
   // Fetch data from external API
