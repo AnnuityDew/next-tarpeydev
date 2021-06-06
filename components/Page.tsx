@@ -4,6 +4,7 @@ import Header from "./Header"
 
 interface PageProps {
   children: React.ReactNode
+  loggedIn?: boolean
   titleTwo?: string
   description?: string
   url?: string
@@ -19,6 +20,7 @@ const defaultDesc =
 
 const Page = ({
   children,
+  loggedIn = false,
   titleTwo = "",
   description = defaultDesc,
   url = "",
@@ -27,7 +29,17 @@ const Page = ({
   subheading = "",
 }: PageProps) => (
   <React.Fragment>
-    <SEO titleTwo={titleTwo} description={description} url={url} urlImage={urlImage} />
+    <SEO
+      titleTwo={titleTwo}
+      description={description}
+      url={url}
+      urlImage={urlImage}
+    />
+    <Header
+      loggedIn={loggedIn}
+      heading={heading}
+      subheading={subheading}
+    ></Header>
     <main>{children}</main>
   </React.Fragment>
 )

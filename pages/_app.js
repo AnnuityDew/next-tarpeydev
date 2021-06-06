@@ -1,9 +1,8 @@
 /* special "core" next.js page where we can apply global CSS */
-
+import { Provider } from "next-auth/client"
 import { createGlobalStyle, ThemeProvider } from "styled-components"
 import "../styles/global.css"
 import Error from "next/error"
-import { breakpoints } from "../utils/breakpoints"
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -12,28 +11,39 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   };
   html {
-    font-family: "Lato", sans-serif;
+    font-size: 1rem;
+    font-family: "Poppins", "Lato", sans-serif;
     -webkit-text-size-adjust: 100%;
-    background-color: #000925;
-    margin: 0 20px;
+    background: conic-gradient(from 225deg at 100px -100px, #dec8ff,#ffbcc8,#ffe784,#ffc4cf,#dbc3ff);
+    color: black;
+    overflow-y: scroll;
+    min-height: 100%;
   }
   img {
     border-style: none;
   }
-  header, main {
-    font-family: "Poppins", sans-serif;
-    color: #FFFFFF;
-    ${breakpoints("font-size", "rem", [
-      { 0: 1 },
-      { 600: 1.2 },
-      { 900: 1.4 },
-      { 1200: 1.6 },
-      { 1600: 1.6 },
-    ])};
+  main {
+    padding: 20px 0px 0px 25px;
   }
 `
 
 const theme = {
+  gradients: {
+    main:
+      "conic-gradient(from 225deg at 100px -100px, " +
+      "#dec8ff,#ffbcc8,#ffe784,#ffc4cf,#dbc3ff)",
+    highlight:
+      "conic-gradient(at 0% 100%, #b78cf7, #ff7c94, #ffcf0d, #ff7c94, #b78cf7)",
+    buttonLightRed: "linear-gradient(180deg, #ffccd5, #ff8097)",
+    buttonDarkRed: "linear-gradient(180deg, #99001c, #4d000e)",
+    buttonBlue: "#0d6fc3",
+  },
+  glass: {
+    black: "rgba(0, 0, 0, 0.65)",
+    blackHover: "rgba(0, 0, 0, 0.55)",
+    blackBorder: "0px solid rgba(0, 0, 0, 0.72)",
+    shadow: "-3px 3px 15px 0 rgba(0, 0, 0, 0.5)",
+  },
   colors: {
     vanilla: "#F3E5AB",
     mild: "#76FF4D",
@@ -76,10 +86,31 @@ export default function App({ Component, pageProps }) {
   }
   return (
     <>
-      <GlobalStyle />
-      <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
-      </ThemeProvider>
+      <Provider
+        // Provider options are not required but can be useful in situations where
+        // you have a short session maxAge time. Shown here with default values.
+        options={{
+          // Client Max Age controls how often the useSession in the client should
+          // contact the server to sync the session state. Value in seconds.
+          // e.g.
+          // * 0  - Disabled (always use cache value)
+          // * 60 - Sync session state with server if it's older than 60 seconds
+          clientMaxAge: 0,
+          // Keep Alive tells windows / tabs that are signed in to keep sending
+          // a keep alive request (which extends the current session expiry) to
+          // prevent sessions in open windows from expiring. Value in seconds.
+          //
+          // Note: If a session has expired when keep alive is triggered, all open
+          // windows / tabs will be updated to reflect the user is signed out.
+          keepAlive: 0,
+        }}
+        session={pageProps.session}
+      >
+        <GlobalStyle />
+        <ThemeProvider theme={theme}>
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </Provider>
     </>
   )
 }

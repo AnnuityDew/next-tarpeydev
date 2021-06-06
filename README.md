@@ -19,6 +19,7 @@ Mike Tarpey's app playground. Search for a game in the backlog, generate a March
 * [Styled Components](https://styled-components.com) for CSS-in-JS
 * [Numeral.js](http://numeraljs.com) for easy number formatting
 * [Prettier](https://prettier.io) for easy code formatting
+* [NextAuth.js](https://next-auth.js.org/) for login functionality
 
 ## Technology Stack
 * Hosted on [Vercel](https://vercel.com)
@@ -37,3 +38,8 @@ Mike Tarpey's app playground. Search for a game in the backlog, generate a March
 * D3:
   * [How to Resize an SVG When the Window is Resized in d3.js](https://chartio.com/resources/tutorials/how-to-resize-an-svg-when-the-window-is-resized-in-d3-js/)
   * [An intro to transition with d3.js](https://www.d3-graph-gallery.com/graph/interactivity_transition.html)
+  * https://stackoverflow.com/questions/24502898/show-or-hide-element-in-react
+  * https://nextjs.org/blog/forms
+  * https://www.taniarascia.com/crud-app-in-react-with-hooks/
+  * https://dev.to/twisha/using-credentials-provider-with-a-custom-backend-in-nextauth-js-43k4
+  * https://blog.bitsrc.io/fetching-data-in-react-using-hooks-c6fdd71cb24a

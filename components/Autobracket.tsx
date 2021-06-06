@@ -299,10 +299,16 @@ export const TeamBoxScorecard = styled(UnstyledTeamBoxScorecard)`
   background: ${props => props.theme.uconn.c700};
 `
 
-const UnstyledPlayerBoxScorecard = ({ key, index, className, team, playerData }) => {
-  var firstQuote = team[index].indexOf("'");
-  var secondQuote = team[index].indexOf("'", (firstQuote + 1));
-  var teamName = team[index].substring(firstQuote + 1, secondQuote);
+const UnstyledPlayerBoxScorecard = ({
+  key,
+  index,
+  className,
+  team,
+  playerData,
+}) => {
+  var firstQuote = team[index].indexOf("'")
+  var secondQuote = team[index].indexOf("'", firstQuote + 1)
+  var teamName = team[index].substring(firstQuote + 1, secondQuote)
   return (
     <section className={className}>
       <h5>Team</h5>
@@ -313,9 +319,10 @@ const UnstyledPlayerBoxScorecard = ({ key, index, className, team, playerData })
       {/* field values */}
       <h5 className="team-name">{teamName}</h5>
       {Object.keys(playerData).map(stat => (
-        
         <h6 key={stat}>
-          {(stat === "Name" || stat === "Position") ? playerData[stat] : numeral(playerData[stat]).format(0)}
+          {stat === "Name" || stat === "Position"
+            ? playerData[stat]
+            : numeral(playerData[stat]).format(0)}
         </h6>
       ))}
     </section>
