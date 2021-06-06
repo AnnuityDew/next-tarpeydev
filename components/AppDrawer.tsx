@@ -39,6 +39,8 @@ export function AppDrawer({ isOpen, onClick }) {
       <ExternalLink href="https://timecapsule.tarpey.dev">
         Time Capsule
       </ExternalLink>
+      <InternalLink href="/mildredleague" label="Mildred League" />
+      <InternalLink href="/ddr" label="DDR" />
       <InternalLink href="/about" label="About tarpey.dev" />
     </AppDrawerNav>
   )

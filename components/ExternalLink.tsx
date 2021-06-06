@@ -10,3 +10,10 @@ export const ExternalLink = styled.a`
   text-decoration: none;
   font-weight: 700;
 `
+
+export const InlineExternalLink = styled.a`
+  color: #444444;
+  text-decoration: none;
+  font-weight: 700;
+`
+

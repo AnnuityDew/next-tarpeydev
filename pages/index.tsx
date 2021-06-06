@@ -35,7 +35,7 @@ export default function Home() {
           imagealt="Mike Tarpey's Final Fantasy XIII-2 collector's edition, on release day in early 2012."
           appName="Dew's Backlog"
           oneLiner="The real final fantasy is me finishing all of my games."
-          buttonText="view the backlog"
+          buttonText="check the backlog"
           url="/backlog"
           buttonKind="dark"
           internal={true}
@@ -44,7 +44,7 @@ export default function Home() {
           imagesrc="/images/raw/uconn-towers-basketball-court.jpeg"
           imagealt="View from the outdoor basketball court by Towers on the UConn Storrs campus."
           appName="Autobracket"
-          oneLiner="placeholder text"
+          oneLiner="Generate March Madness brackets based on the results of a Monte Carlo simulation."
           buttonText="make some brackets"
           url="/autobracket"
           buttonKind="dark"
@@ -54,17 +54,17 @@ export default function Home() {
           imagesrc="/images/raw/mike-tarpey-first-computer.jpeg"
           imagealt="Mike Tarpey in the mid-90s using a PC for the first time."
           appName="Time Capsule"
-          oneLiner="placeholder text"
+          oneLiner="View my first websites, created as early as 2006."
           buttonText="visit the past"
           url="https://timecapsule.tarpey.dev"
           buttonKind="dark"
-          internal={true}
+          internal={false}
         />
         <IndexAppCard
           imagesrc="/images/raw/mildred-league-hot-takes.jpeg"
           imagealt="A white board of ridiculous football season hot takes from some of the members of Mildred League."
           appName="Mildred League"
-          oneLiner="placeholder text"
+          oneLiner="Winners get wings."
           buttonText="view the league"
           url="/mildredleague"
           buttonKind="dark"
@@ -74,7 +74,7 @@ export default function Home() {
           imagesrc="/images/raw/ddr-extreme-prom-lynnhaven-mall-amc.jpeg"
           imagealt="The DDR Extreme cabinet at the Virginia Beach Lynnhaven AMC on prom night 2010."
           appName="DDR"
-          oneLiner="placeholder text"
+          oneLiner="My attempts to reverse engineer PS2 DDR memory card data for scores and statistics."
           buttonText="are you ready?"
           url="/ddr"
           buttonKind="dark"

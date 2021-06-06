@@ -24,22 +24,11 @@ export default function About() {
   return (
     <Page
       loggedIn={!!session}
-      titleTwo=" - about"
-      description="All about Mike Tarpey's app sandbox."
-      heading="about"
-      subheading="Where did all of the apps go?"
+      titleTwo=" - Mildred League"
+      description="Mildred League is a fantasy football league created in 2013. This tarpey.dev web app tracks and visualizes the scores, statistics, and history of the league."
+      heading="Mildred League"
     >
-      <p>
-        This site is a place for me to play around with creating web apps. All of the code for the site can be found on{" "} 
-        <InlineExternalLink href="https://github.com/AnnuityDew/next-tarpeydev">GitHub</InlineExternalLink>.
-      </p>
-      <p>
-        For less about apps and more about me, visit{" "}
-        <InlineExternalLink href="https://miketarpey.com">
-          miketarpey.com
-        </InlineExternalLink>
-        .
-      </p>
+      <h2>Under construction!</h2>
     </Page>
   )
 }

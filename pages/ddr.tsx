@@ -24,22 +24,11 @@ export default function About() {
   return (
     <Page
       loggedIn={!!session}
-      titleTwo=" - about"
-      description="All about Mike Tarpey's app sandbox."
-      heading="about"
-      subheading="Where did all of the apps go?"
+      titleTwo=" - DDR"
+      description="Mike Tarpey's attempts to reverse engineer PS2 DDR memory card data for scores and statistics."
+      heading="DDR"
     >
-      <p>
-        This site is a place for me to play around with creating web apps. All of the code for the site can be found on{" "} 
-        <InlineExternalLink href="https://github.com/AnnuityDew/next-tarpeydev">GitHub</InlineExternalLink>.
-      </p>
-      <p>
-        For less about apps and more about me, visit{" "}
-        <InlineExternalLink href="https://miketarpey.com">
-          miketarpey.com
-        </InlineExternalLink>
-        .
-      </p>
+      <h2>Under construction!</h2>
     </Page>
   )
 }

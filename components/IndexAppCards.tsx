@@ -8,8 +8,8 @@ const IndexGlassDiv = styled.section`
   padding: 20px;
   display: grid;
   grid-gap: 10px;
-  grid-template-rows: ${props => props.gridTemplateRows || "3fr 1fr 2fr 1fr"};
-  align-items: stretch;
+  grid-template-rows: ${props => props.gridTemplateRows || "4fr 1fr 2fr 1fr"};
+  align-items: center;
   min-height: ${props => props.minHeight};
   background: ${props => props.theme.glass.black};
   box-shadow: ${props => props.theme.glass.shadow};
@@ -61,6 +61,7 @@ export function IndexAppCard({
           alt={imagealt}
           layout="fill"
           objectFit="cover"
+          priority={true}
         />
       </CoverPicDiv>
       <h2>{appName}</h2>
