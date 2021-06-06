@@ -31,18 +31,18 @@ export default function Home() {
     >
       <IndexAppGrid>
         <IndexAppCard
-          imagesrc="/images/raw/mike-tarpey-at-pax.jpg"
-          imagealt="Mike Tarpey on his way to PAX East 2020 in Boston, Massachusetts."
+          imagesrc="/images/raw/final-fantasy-13-2-collectors.jpeg"
+          imagealt="Mike Tarpey's Final Fantasy XIII-2 collector's edition, on release day in early 2012."
           appName="Dew's Backlog"
-          oneLiner="placeholder text"
+          oneLiner="The real final fantasy is me finishing all of my games."
           buttonText="view the backlog"
           url="/backlog"
           buttonKind="dark"
           internal={true}
         />
         <IndexAppCard
-          imagesrc="/images/raw/mike-tarpey-at-pax.jpg"
-          imagealt="Mike Tarpey on his way to PAX East 2020 in Boston, Massachusetts."
+          imagesrc="/images/raw/uconn-towers-basketball-court.jpeg"
+          imagealt="View from the outdoor basketball court by Towers on the UConn Storrs campus."
           appName="Autobracket"
           oneLiner="placeholder text"
           buttonText="make some brackets"
@@ -51,8 +51,8 @@ export default function Home() {
           internal={true}
         />
         <IndexAppCard
-          imagesrc="/images/raw/mike-tarpey-at-pax.jpg"
-          imagealt="Mike Tarpey on his way to PAX East 2020 in Boston, Massachusetts."
+          imagesrc="/images/raw/mike-tarpey-first-computer.jpeg"
+          imagealt="Mike Tarpey in the mid-90s using a PC for the first time."
           appName="Time Capsule"
           oneLiner="placeholder text"
           buttonText="visit the past"
@@ -61,8 +61,8 @@ export default function Home() {
           internal={true}
         />
         <IndexAppCard
-          imagesrc="/images/raw/mike-tarpey-at-pax.jpg"
-          imagealt="Mike Tarpey on his way to PAX East 2020 in Boston, Massachusetts."
+          imagesrc="/images/raw/mildred-league-hot-takes.jpeg"
+          imagealt="A white board of ridiculous football season hot takes from some of the members of Mildred League."
           appName="Mildred League"
           oneLiner="placeholder text"
           buttonText="view the league"
@@ -71,8 +71,8 @@ export default function Home() {
           internal={true}
         />
         <IndexAppCard
-          imagesrc="/images/raw/mike-tarpey-at-pax.jpg"
-          imagealt="Mike Tarpey on his way to PAX East 2020 in Boston, Massachusetts."
+          imagesrc="/images/raw/ddr-extreme-prom-lynnhaven-mall-amc.jpeg"
+          imagealt="The DDR Extreme cabinet at the Virginia Beach Lynnhaven AMC on prom night 2010."
           appName="DDR"
           oneLiner="placeholder text"
           buttonText="are you ready?"
