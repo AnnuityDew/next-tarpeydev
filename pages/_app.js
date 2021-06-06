@@ -42,7 +42,7 @@ const theme = {
     black: "rgba(0, 0, 0, 0.65)",
     blackHover: "rgba(0, 0, 0, 0.55)",
     blackBorder: "0px solid rgba(0, 0, 0, 0.72)",
-    shadow: "-3px 3px 15px 0 rgba(0, 0, 0, 0.5)"
+    shadow: "-3px 3px 15px 0 rgba(0, 0, 0, 0.5)",
   },
   colors: {
     vanilla: "#F3E5AB",

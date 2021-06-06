@@ -47,9 +47,16 @@ export const LinkedAppButton = ({ label, url, kind }) => (
   /* outer div allows us to pad and align */
   <div>
     <Link href={url} passHref>
-      <StyledButton kind={kind}>
-        {label}
-      </StyledButton>
+      <StyledButton kind={kind}>{label}</StyledButton>
     </Link>
+  </div>
+)
+
+export const ExternalAppButton = ({ label, url, kind }) => (
+  /* outer div allows us to pad and align */
+  <div>
+    <a href={url}>
+      <StyledButton kind={kind}>{label}</StyledButton>
+    </a>
   </div>
 )

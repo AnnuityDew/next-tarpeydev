@@ -1,7 +1,6 @@
 import Page from "../components/Page"
 import { IndexAppCard } from "../components/IndexAppCards"
 import { IndexAppGrid } from "../components/IndexAppGrid"
-import { LinkedAppButton } from "../components/AppButtons"
 import { useSession, getSession } from "next-auth/client"
 
 export async function getServerSideProps(context) {
@@ -32,18 +31,55 @@ export default function Home() {
     >
       <IndexAppGrid>
         <IndexAppCard
-          internal={true}
-          label="about"
           imagesrc="/images/raw/mike-tarpey-at-pax.jpg"
           imagealt="Mike Tarpey on his way to PAX East 2020 in Boston, Massachusetts."
-        >
-          <p>Career and project history.</p>
-          <LinkedAppButton
-            label="full resume + projects"
-            url="/about"
-            kind="light"
-          />
-        </IndexAppCard>
+          appName="Dew's Backlog"
+          oneLiner="placeholder text"
+          buttonText="view the backlog"
+          url="/backlog"
+          buttonKind="dark"
+          internal={true}
+        />
+        <IndexAppCard
+          imagesrc="/images/raw/mike-tarpey-at-pax.jpg"
+          imagealt="Mike Tarpey on his way to PAX East 2020 in Boston, Massachusetts."
+          appName="Autobracket"
+          oneLiner="placeholder text"
+          buttonText="make some brackets"
+          url="/autobracket"
+          buttonKind="dark"
+          internal={true}
+        />
+        <IndexAppCard
+          imagesrc="/images/raw/mike-tarpey-at-pax.jpg"
+          imagealt="Mike Tarpey on his way to PAX East 2020 in Boston, Massachusetts."
+          appName="Time Capsule"
+          oneLiner="placeholder text"
+          buttonText="visit the past"
+          url="https://timecapsule.tarpey.dev"
+          buttonKind="dark"
+          internal={true}
+        />
+        <IndexAppCard
+          imagesrc="/images/raw/mike-tarpey-at-pax.jpg"
+          imagealt="Mike Tarpey on his way to PAX East 2020 in Boston, Massachusetts."
+          appName="Mildred League"
+          oneLiner="placeholder text"
+          buttonText="view the league"
+          url="/mildredleague"
+          buttonKind="dark"
+          internal={true}
+        />
+        <IndexAppCard
+          imagesrc="/images/raw/mike-tarpey-at-pax.jpg"
+          imagealt="Mike Tarpey on his way to PAX East 2020 in Boston, Massachusetts."
+          appName="DDR"
+          oneLiner="placeholder text"
+          buttonText="are you ready?"
+          url="/ddr"
+          buttonKind="dark"
+          internal={true}
+        />
       </IndexAppGrid>
     </Page>
   )

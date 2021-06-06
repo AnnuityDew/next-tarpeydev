@@ -1,15 +1,7 @@
 import React from "react"
 import Image from "next/image"
 import styled from "styled-components"
-
-interface CardProps {
-  internal?: boolean
-  label?: string
-  children?: React.ReactNode
-  imagesrc?: string
-  imagealt?: string
-  gridrowcss?: string
-}
+import { LinkedAppButton, ExternalAppButton } from "../components/AppButtons"
 
 const IndexGlassDiv = styled.section`
   color: white;
@@ -52,14 +44,17 @@ const CoverNextImage = styled(Image)`
 `
 
 export function IndexAppCard({
-  label,
-  children,
   imagesrc,
   imagealt,
-  gridrowcss,
-}: CardProps) {
+  appName,
+  oneLiner,
+  buttonText,
+  url,
+  buttonKind,
+  internal,
+}) {
   return (
-    <IndexGlassDiv minHeight="400px" gridTemplateRows={gridrowcss}>
+    <IndexGlassDiv minHeight="400px">
       <CoverPicDiv>
         <CoverNextImage
           src={imagesrc}
@@ -68,8 +63,13 @@ export function IndexAppCard({
           objectFit="cover"
         />
       </CoverPicDiv>
-      <h2>{label}</h2>
-      {children}
+      <h2>{appName}</h2>
+      <p>{oneLiner}</p>
+      {internal ? (
+        <LinkedAppButton label={buttonText} url={url} kind={buttonKind} />
+      ) : (
+        <ExternalAppButton label={buttonText} url={url} kind={buttonKind} />
+      )}
     </IndexGlassDiv>
   )
 }
