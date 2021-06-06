@@ -39,7 +39,7 @@ const GradientTitle = styled.h1`
 `
 
 const UserNav = styled.nav`
-  display: flex;
+  place-self: center;
 `
 
 export default function Header({ loggedIn, heading, subheading }: HeaderProps) {

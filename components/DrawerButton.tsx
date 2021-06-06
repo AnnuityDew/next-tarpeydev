@@ -10,6 +10,7 @@ const StyledOpenDrawerButton = styled.div`
   ])}
   text-decoration: none;
   font-weight: 700;
+  place-self: center;
 `
 
 const StyledCloseDrawerButton = styled.div`

@@ -42,3 +42,4 @@ Mike Tarpey's app playground. Search for a game in the backlog, generate a March
   * https://nextjs.org/blog/forms
   * https://www.taniarascia.com/crud-app-in-react-with-hooks/
   * https://dev.to/twisha/using-credentials-provider-with-a-custom-backend-in-nextauth-js-43k4
+  * https://blog.bitsrc.io/fetching-data-in-react-using-hooks-c6fdd71cb24a
