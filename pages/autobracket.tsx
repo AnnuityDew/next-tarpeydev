@@ -390,6 +390,16 @@ class BracketGenerator extends Component<
       )
     }
 
+    const appContents = <div>
+      <section>{bracketForm}</section>
+      {bracket}
+      <section>{bracketReset}</section>
+      <section>{appNotes}</section>
+      <section>{returnToBracket}</section>
+      <section>{boxScore}</section>
+      <section>{returnToBracket}</section>
+    </div>
+
     return (
       <Page
         titleTwo=" - autobracket"
@@ -400,13 +410,7 @@ class BracketGenerator extends Component<
         heading="autobracket"
         subheading="Automatic bracket generator for March Madness 2021."
       >
-        <section>{bracketForm}</section>
-        {bracket}
-        <section>{bracketReset}</section>
-        <section>{appNotes}</section>
-        <section>{returnToBracket}</section>
-        <section>{boxScore}</section>
-        <section>{returnToBracket}</section>
+        {false ? appContents: <h2>Under construction!</h2>}
       </Page>
     )
   }

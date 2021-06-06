@@ -254,7 +254,7 @@ export default function BacklogAdmin({ apiUrl }) {
           disabled={backlog["loading"]}
         />
       </FilterDiv>
-      <div>{visual["visible"] && visual["data"]}</div>
+      <div>{visual["visible"] && "Coming soon!"}</div>
     </section>
   )
 
