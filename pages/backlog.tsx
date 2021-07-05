@@ -86,7 +86,7 @@ export default function BacklogAdmin({ apiUrl }) {
       method: "POST",
       headers: {
         accept: "application/json",
-        Authorization: `Bearer ${session.access_token}`,
+        // Authorization: `Bearer ${session.access_token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify([game]),
@@ -110,7 +110,7 @@ export default function BacklogAdmin({ apiUrl }) {
       method: "DELETE",
       headers: {
         accept: "application/json",
-        Authorization: `Bearer ${session.access_token}`,
+        // Authorization: `Bearer ${session.access_token}`,
       },
     })
     fetch(request)
@@ -132,7 +132,7 @@ export default function BacklogAdmin({ apiUrl }) {
       method: "PATCH",
       headers: {
         accept: "application/json",
-        Authorization: `Bearer ${session.access_token}`,
+        // Authorization: `Bearer ${session.access_token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(game),
