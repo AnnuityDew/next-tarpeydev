@@ -63,9 +63,9 @@ export default function Home() {
           appName="Mildred League"
           oneLiner="Winners get wings."
           buttonText="view the league"
-          url="/mildredleague"
+          url="https://mildredleague.tarpey.dev"
           buttonKind="dark"
-          internal={true}
+          internal={false}
         />
         <IndexAppCard
           imagesrc="/images/raw/ddr-extreme-prom-lynnhaven-mall-amc.jpeg"
