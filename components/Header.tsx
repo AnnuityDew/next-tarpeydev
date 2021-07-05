@@ -53,10 +53,6 @@ export default function Header({ loggedIn, heading, subheading }: HeaderProps) {
     <PageHeader>
       <PageHeaderGrid>
         <GradientTitle>{heading}</GradientTitle>
-        <UserNav>
-          {!loggedIn && <InternalLink href="/api/auth/signin" label="login" />}
-          {loggedIn && <InternalLink href="/api/auth/signout" label="logout" />}
-        </UserNav>
         <OpenDrawerButton onClick={toggleDrawer} />
       </PageHeaderGrid>
       <AppDrawer isOpen={isOpen} onClick={toggleDrawer} />

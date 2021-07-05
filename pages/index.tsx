@@ -1,7 +1,6 @@
 import Page from "../components/Page"
 import { IndexAppCard } from "../components/IndexAppCards"
 import { IndexAppGrid } from "../components/IndexAppGrid"
-import { useSession, getSession } from "next-auth/client"
 
 export async function getServerSideProps(context) {
   // Fetch data from external API
@@ -15,15 +14,13 @@ export async function getServerSideProps(context) {
   }
 
   // Pass data to the page via props
-  return { props: { apiUrl: api, session: await getSession(context) } }
+  return { props: { apiUrl: api } }
 }
 
 export default function Home() {
-  const [session, loading] = useSession()
-
   return (
     <Page
-      loggedIn={!!session}
+      loggedIn={false}
       description="Mike Tarpey's app playground. Search for a game in the backlog, generate a March Madness bracket, view stats for Mildred League, or dive into the time capsule..."
       url="https://tarpey.dev"
       urlImage="https://tarpey.dev/tarpeydevog.png"

@@ -1,6 +1,5 @@
 import Page from "../components/Page"
 import { InlineExternalLink } from "../components/ExternalLink"
-import { useSession, getSession } from "next-auth/client"
 
 // This gets called only on build
 export async function getServerSideProps(context) {
@@ -15,15 +14,14 @@ export async function getServerSideProps(context) {
   }
 
   // Pass data to the page via props
-  return { props: { apiUrl: api, session: await getSession(context) } }
+  return { props: { apiUrl: api } }
 }
 
 export default function About() {
-  const [session, loading] = useSession()
 
   return (
     <Page
-      loggedIn={!!session}
+      loggedIn={false}
       titleTwo=" - DDR"
       description="Mike Tarpey's attempts to reverse engineer PS2 DDR memory card data for scores and statistics."
       heading="DDR"

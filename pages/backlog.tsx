@@ -1,7 +1,6 @@
 // https://github.com/nextauthjs/next-auth-example/blob/main/pages/protected.js
 import { useState } from "react"
 import Page from "../components/Page"
-import { useSession, getSession } from "next-auth/client"
 import { AppButton } from "../components/AppButtons"
 import { ExistingBacklogGame, NewBacklogGameForm } from "../components/Backlog"
 import { FilterButton } from "../components/FilterButtons"
@@ -21,11 +20,10 @@ export async function getServerSideProps(context) {
   }
 
   // Pass data to the page via props
-  return { props: { apiUrl: api, session: await getSession(context) } }
+  return { props: { apiUrl: api } }
 }
 
 export default function BacklogAdmin({ apiUrl }) {
-  const [session, loading] = useSession()
   const [backlog, setBacklog] = useState({
     visible: false,
     loading: false,
@@ -183,7 +181,7 @@ export default function BacklogAdmin({ apiUrl }) {
         label="visualize"
         kind={visualize ? "darkPressed" : "dark"}
       />
-      {!!session && (
+      {false && (
         <AppButton
           onClick={onAddGame}
           label={backlog["loading"] ? loadingText : "Add a game"}
@@ -222,7 +220,7 @@ export default function BacklogAdmin({ apiUrl }) {
             <ExistingBacklogGame
               key={index + 1}
               gameData={game}
-              loggedIn={!!session}
+              loggedIn={false}
               updateGame={updateGame}
               deleteGame={deleteGame}
             />
@@ -266,7 +264,7 @@ export default function BacklogAdmin({ apiUrl }) {
 
   return (
     <Page
-      loggedIn={!!session}
+      loggedIn={false}
       titleTwo=" - Dew's Backlog"
       description="A web app for viewing games, movies, and shows in my backlog."
       url="https://tarpey.dev/backlog"
